@@ -15,6 +15,7 @@ import {
 } from '../../lib/adminProjects'
 import { slugify } from '../../lib/slug'
 import { deleteFile, storagePathFromUrl, uploadFile } from '../../lib/storage'
+import { buttonPrimary, inputField } from '../../lib/styles'
 import type { ProjectAttachment, ProjectInsert } from '../../types/database.types'
 
 export default function AdminProjectForm() {
@@ -266,7 +267,7 @@ export default function AdminProjectForm() {
             required
             value={title}
             onChange={(event) => handleTitleChange(event.target.value)}
-            className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-slate-900 focus:outline-none"
+            className={`mt-1 ${inputField}`}
           />
         </div>
 
@@ -281,7 +282,7 @@ export default function AdminProjectForm() {
             value={slug}
             onChange={(event) => handleSlugChange(event.target.value)}
             onBlur={handleSlugBlur}
-            className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 font-mono text-sm focus:border-slate-900 focus:outline-none"
+            className={`mt-1 font-mono ${inputField}`}
           />
           <p className="mt-1 text-xs text-slate-400">
             Onderdeel van de URL: /projecten/{slug || '…'}
@@ -299,7 +300,7 @@ export default function AdminProjectForm() {
             rows={2}
             value={summary}
             onChange={(event) => setSummary(event.target.value)}
-            className="mt-1 w-full resize-y rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-slate-900 focus:outline-none"
+            className={`mt-1 resize-y ${inputField}`}
           />
         </div>
 
@@ -363,7 +364,7 @@ export default function AdminProjectForm() {
               value={category}
               onChange={(event) => setCategory(event.target.value)}
               placeholder="Bijv. Overnameanalyse"
-              className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-slate-900 focus:outline-none"
+              className={`mt-1 ${inputField}`}
             />
           </div>
 
@@ -376,7 +377,7 @@ export default function AdminProjectForm() {
               type="date"
               value={projectDate}
               onChange={(event) => setProjectDate(event.target.value)}
-              className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-slate-900 focus:outline-none"
+              className={`mt-1 ${inputField}`}
             />
           </div>
 
@@ -389,7 +390,7 @@ export default function AdminProjectForm() {
               type="number"
               value={sortOrder}
               onChange={(event) => setSortOrder(Number(event.target.value))}
-              className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-slate-900 focus:outline-none"
+              className={`mt-1 ${inputField}`}
             />
             <p className="mt-1 text-xs text-slate-400">Laag getal wordt eerst getoond.</p>
           </div>
@@ -401,7 +402,7 @@ export default function AdminProjectForm() {
               type="checkbox"
               checked={featured}
               onChange={(event) => setFeatured(event.target.checked)}
-              className="h-4 w-4 rounded border-slate-300"
+              className="h-4 w-4 rounded border-slate-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
             />
             Uitgelicht op home
           </label>
@@ -410,7 +411,7 @@ export default function AdminProjectForm() {
               type="checkbox"
               checked={published}
               onChange={(event) => setPublished(event.target.checked)}
-              className="h-4 w-4 rounded border-slate-300"
+              className="h-4 w-4 rounded border-slate-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
             />
             Gepubliceerd (zichtbaar voor bezoekers)
           </label>
@@ -470,11 +471,7 @@ export default function AdminProjectForm() {
         ) : null}
 
         <div className="flex items-center gap-3">
-          <button
-            type="submit"
-            disabled={saving}
-            className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
-          >
+          <button type="submit" disabled={saving} className={buttonPrimary}>
             {saving ? 'Bezig met opslaan…' : 'Opslaan'}
           </button>
           <Link to="/admin" className="text-sm text-slate-500 hover:text-slate-900">

@@ -14,7 +14,7 @@ export default function MarkdownEditor({ id, value, onChange }: MarkdownEditorPr
         value={value}
         onChange={(event) => onChange(event.target.value)}
         rows={16}
-        className="w-full resize-y rounded-md border border-slate-300 p-3 font-mono text-sm focus:border-slate-900 focus:outline-none"
+        className="w-full resize-y rounded-md border border-slate-300 p-3 font-mono text-sm focus:border-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-900/20"
         placeholder="Schrijf de projectbeschrijving in markdown…"
       />
       <div className="rounded-md border border-slate-200 bg-slate-50 p-3">

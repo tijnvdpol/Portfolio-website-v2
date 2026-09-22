@@ -32,7 +32,7 @@ export default function TagsInput({ id, value, onChange }: TagsInputProps) {
 
   return (
     <div>
-      <div className="flex flex-wrap items-center gap-1.5 rounded-md border border-slate-300 p-2 focus-within:border-slate-900">
+      <div className="flex flex-wrap items-center gap-1.5 rounded-md border border-slate-300 p-2 focus-within:border-slate-900 focus-within:ring-2 focus-within:ring-slate-900/20">
         {value.map((tag) => (
           <span
             key={tag}

@@ -3,6 +3,7 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import SeoHead from '../../components/SeoHead'
 import { useAuth } from '../../hooks/useAuth'
 import { signInWithPassword } from '../../lib/auth'
+import { buttonPrimary, inputField } from '../../lib/styles'
 
 type LocationState = { from?: { pathname: string } }
 
@@ -56,7 +57,7 @@ export default function AdminLogin() {
             autoComplete="email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
-            className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-slate-900 focus:outline-none"
+            className={`mt-1 ${inputField}`}
           />
         </div>
 
@@ -72,7 +73,7 @@ export default function AdminLogin() {
             autoComplete="current-password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
-            className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-slate-900 focus:outline-none"
+            className={`mt-1 ${inputField}`}
           />
         </div>
 
@@ -82,11 +83,7 @@ export default function AdminLogin() {
           </p>
         ) : null}
 
-        <button
-          type="submit"
-          disabled={submitting}
-          className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
-        >
+        <button type="submit" disabled={submitting} className={buttonPrimary}>
           {submitting ? 'Bezig…' : 'Inloggen'}
         </button>
       </form>

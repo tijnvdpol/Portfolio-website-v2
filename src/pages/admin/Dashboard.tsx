@@ -9,6 +9,7 @@ import { signOut } from '../../lib/auth'
 import { deleteProject } from '../../lib/adminProjects'
 import { formatProjectDate } from '../../lib/format'
 import { deleteFile, storagePathFromUrl } from '../../lib/storage'
+import { buttonPrimary, buttonSecondary } from '../../lib/styles'
 import type { Project } from '../../types/database.types'
 
 export default function AdminDashboard() {
@@ -52,17 +53,10 @@ export default function AdminDashboard() {
           ) : null}
         </div>
         <div className="flex gap-3">
-          <Link
-            to="/admin/projecten/nieuw"
-            className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
-          >
+          <Link to="/admin/projecten/nieuw" className={buttonPrimary}>
             Nieuw project
           </Link>
-          <button
-            type="button"
-            onClick={() => signOut()}
-            className="rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:border-slate-400"
-          >
+          <button type="button" onClick={() => signOut()} className={buttonSecondary}>
             Uitloggen
           </button>
         </div>
