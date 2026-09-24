@@ -44,6 +44,11 @@ Editor** in het Supabase dashboard, of via de [Supabase CLI](https://supabase.co
 
 Optioneel: `supabase/seed.sql` voor drie voorbeeldprojecten.
 
+`supabase/projecten-2026-09.sql` vervangt die voorbeeldprojecten door de echte projecten
+(Factuurscanner, het onderzoek naar AI en de financial controller, AI Wijzer, Dagboekje en
+Digitaal Dagboek), inclusief bewijslast. Eenmalig uitvoeren in de SQL Editor; het script draait
+in één transactie.
+
 Daarnaast eenmalig in het dashboard:
 
 - **Authentication → Sign In / Providers → Email**: zet "Allow new users to sign up" uit
@@ -57,12 +62,25 @@ Daarnaast eenmalig in het dashboard:
 2. Klik op **Nieuw project**, vul titel, samenvatting en (optioneel) de markdown-inhoud in —
    de slug wordt automatisch gegenereerd op basis van de titel, maar is aanpasbaar.
 3. Upload eventueel een coverafbeelding.
-4. Sla op. Je komt automatisch op de bewerkpagina van het project, waar je nu ook bijlagen
-   (bijv. een PDF of Excel-bestand) kunt uploaden.
+4. Sla op. Je komt automatisch op de bewerkpagina van het project, waar je nu ook bewijslast
+   kunt toevoegen: bestanden uploaden (bijv. een PDF of Excel-bestand) of links toevoegen van het
+   soort *Live demo*, *Broncode*, *Rapport* of *Documentatie*.
 5. Vink **Gepubliceerd** aan zodra het project zichtbaar mag zijn voor bezoekers, en
    **Uitgelicht op home** als het op de homepage mag verschijnen.
 
 Projecten verwijderen kan vanuit het dashboard (`/admin`), met een bevestigingsvraag.
+
+### Bewijslast en rapporten
+
+Bewijslast staat in `project_attachments`; `file_type` bepaalt het soort (`demo`, `github`,
+`reader`, `document`, of het MIME-type bij een upload). Zie `src/lib/evidence.ts`.
+
+Een rapport dat volledig op de site te lezen is, staat als markdown in `src/content/rapporten/`
+en wordt geregistreerd in `src/data/reports.ts`. Het is dan te lezen op `/rapporten/<slug>` (met
+inhoudsopgave en een knop om af te drukken of als PDF op te slaan). Voeg daarna bij het project
+een link van het soort *Rapport* toe naar `/rapporten/<slug>`.
+
+Coverafbeeldingen van de huidige projecten staan in `public/covers/`.
 
 ## Mapstructuur
 

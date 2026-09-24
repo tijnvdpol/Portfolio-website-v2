@@ -12,7 +12,7 @@ const linkClass = ({ isActive }: { isActive: boolean }) =>
 
 export default function Navbar() {
   return (
-    <header className="sticky top-0 z-10 border-b border-line bg-paper/85 backdrop-blur">
+    <header className="sticky top-0 z-10 border-b border-line bg-paper/85 backdrop-blur print:hidden">
       <nav className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-4">
         <NavLink
           to="/"

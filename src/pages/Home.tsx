@@ -8,10 +8,10 @@ import { useFeaturedProjects } from '../hooks/useProjects'
 import { buttonPrimary, buttonSecondary, eyebrow, focusRing } from '../lib/styles'
 
 const focusAreas = [
-  'Overnameanalyses',
-  'Financiële modellen',
-  'Strategische analyses',
-  'Minor-projecten',
+  'AI-toepassingen voor finance',
+  'Webapps met eigen database',
+  'Interne beheersing (AO/IC)',
+  'Onderzoek naar AI in finance',
 ]
 
 export default function Home() {
@@ -21,7 +21,7 @@ export default function Home() {
     <main>
       <SeoHead
         title="Tijn van der Pol — Portfolio"
-        description="Portfolio van Tijn van der Pol, student Finance & Control: overnameanalyses, financiële modellen, strategische analyses en minor-projecten."
+        description="Portfolio van Tijn van der Pol, student Finance & Control: AI-toepassingen voor finance, webapps met een eigen database en onderzoek naar AI en de financial controller."
       />
 
       <section className="mx-auto grid max-w-5xl items-end gap-12 px-4 pt-16 pb-20 sm:pt-24 lg:grid-cols-12">
@@ -31,9 +31,9 @@ export default function Home() {
             Tijn van der Pol
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-soft">
-            Vierdejaars student Finance &amp; Control. Dit portfolio toont een selectie van mijn
-            werk: overnameanalyses, financiële modellen, strategische analyses en projecten uit mijn
-            minor.
+            Vierdejaars student Finance &amp; Control. Ik bouw en onderzoek op het snijvlak van
+            finance en AI: van een factuurscanner met functiescheiding en audit trail tot onderzoek
+            naar de financial controller van 2030.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link to="/projecten" className={buttonPrimary}>

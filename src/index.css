@@ -34,6 +34,12 @@ body {
   color: var(--color-accent-strong);
 }
 
+/* Citaten in de content bevatten zelf al aanhalingstekens. */
+.prose blockquote p::before,
+.prose blockquote p::after {
+  content: none;
+}
+
 /* Grootboeklijnen als decoratief motief (bijv. placeholders zonder coverafbeelding). */
 .ledger-pattern {
   background-color: var(--color-paper-deep);

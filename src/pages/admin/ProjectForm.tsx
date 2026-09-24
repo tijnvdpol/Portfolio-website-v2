@@ -1,4 +1,4 @@
-import { type ChangeEvent, type FormEvent, useEffect, useState } from 'react'
+import { type ChangeEvent, type FormEvent, type KeyboardEvent, useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import MarkdownEditor from '../../components/admin/MarkdownEditor'
 import TagsInput from '../../components/admin/TagsInput'
@@ -13,9 +13,10 @@ import {
   isSlugTaken,
   updateProject,
 } from '../../lib/adminProjects'
+import { EVIDENCE_TYPES, evidenceLabel, evidenceType, isInternalUrl } from '../../lib/evidence'
 import { slugify } from '../../lib/slug'
 import { deleteFile, storagePathFromUrl, uploadFile } from '../../lib/storage'
-import { buttonPrimary, inputField } from '../../lib/styles'
+import { buttonPrimary, buttonSecondary, inputField } from '../../lib/styles'
 import type { ProjectAttachment, ProjectInsert } from '../../types/database.types'
 
 export default function AdminProjectForm() {
@@ -43,6 +44,10 @@ export default function AdminProjectForm() {
   const [coverUploading, setCoverUploading] = useState(false)
   const [attachments, setAttachments] = useState<ProjectAttachment[]>([])
   const [attachmentUploading, setAttachmentUploading] = useState(false)
+  const [linkType, setLinkType] = useState<keyof typeof EVIDENCE_TYPES>('demo')
+  const [linkLabel, setLinkLabel] = useState('')
+  const [linkUrl, setLinkUrl] = useState('')
+  const [linkSaving, setLinkSaving] = useState(false)
 
   const [saving, setSaving] = useState(false)
   const [formError, setFormError] = useState<string | null>(null)
@@ -150,6 +155,45 @@ export default function AdminProjectForm() {
     } finally {
       setAttachmentUploading(false)
       event.target.value = ''
+    }
+  }
+
+  async function handleAddLink() {
+    if (!id) return
+    const url = linkUrl.trim()
+    const label = linkLabel.trim()
+    if (!label || !url) {
+      setFormError('Vul een omschrijving en een URL in voor de link.')
+      return
+    }
+    if (!/^https?:\/\//.test(url) && !isInternalUrl(url)) {
+      setFormError('Een link begint met https:// of, voor een pagina op deze site, met /.')
+      return
+    }
+
+    setLinkSaving(true)
+    setFormError(null)
+    try {
+      const attachment = await addAttachment(id, {
+        file_name: label,
+        file_url: url,
+        file_type: linkType,
+      })
+      setAttachments((prev) => [...prev, attachment])
+      setLinkLabel('')
+      setLinkUrl('')
+    } catch (err) {
+      setFormError(err instanceof Error ? err.message : 'Link toevoegen mislukt.')
+    } finally {
+      setLinkSaving(false)
+    }
+  }
+
+  function handleLinkKeyDown(event: KeyboardEvent<HTMLInputElement>) {
+    // Enter zou anders het hele projectformulier versturen.
+    if (event.key === 'Enter') {
+      event.preventDefault()
+      void handleAddLink()
     }
   }
 
@@ -363,7 +407,7 @@ export default function AdminProjectForm() {
               type="text"
               value={category}
               onChange={(event) => setCategory(event.target.value)}
-              placeholder="Bijv. Overnameanalyse"
+              placeholder="Bijv. Webapplicatie"
               className={`mt-1 ${inputField}`}
             />
           </div>
@@ -418,7 +462,11 @@ export default function AdminProjectForm() {
         </div>
 
         <div>
-          <p className="block text-sm font-medium text-slate-700">Bijlagen</p>
+          <p className="block text-sm font-medium text-slate-700">Bewijslast en bijlagen</p>
+          <p className="mt-1 text-xs text-slate-500">
+            Upload bestanden of voeg links toe (live demo, GitHub, rapport). Ze verschijnen als
+            bewijslast op de projectpagina.
+          </p>
 
           {attachments.length > 0 ? (
             <ul className="mt-2 space-y-2">
@@ -430,6 +478,9 @@ export default function AdminProjectForm() {
                     rel="noopener noreferrer"
                     className="text-slate-700 underline underline-offset-4 hover:text-slate-900"
                   >
+                    <span className="mr-2 text-xs font-semibold uppercase tracking-wider text-slate-400">
+                      {evidenceLabel(evidenceType(attachment.file_type))}
+                    </span>
                     {attachment.file_name}
                   </a>
                   <button
@@ -456,6 +507,52 @@ export default function AdminProjectForm() {
               {attachmentUploading ? (
                 <p className="mt-1 text-xs text-slate-400">Bezig met uploaden…</p>
               ) : null}
+
+              <fieldset className="mt-4 rounded-md border border-slate-200 p-3">
+                <legend className="px-1 text-xs font-medium text-slate-600">Link toevoegen</legend>
+                <div className="grid gap-2 sm:grid-cols-[10rem_1fr]">
+                  <select
+                    aria-label="Soort link"
+                    value={linkType}
+                    onChange={(event) =>
+                      setLinkType(event.target.value as keyof typeof EVIDENCE_TYPES)
+                    }
+                    className={inputField}
+                  >
+                    {Object.entries(EVIDENCE_TYPES).map(([value, label]) => (
+                      <option key={value} value={value}>
+                        {label}
+                      </option>
+                    ))}
+                  </select>
+                  <input
+                    aria-label="Omschrijving"
+                    placeholder="Omschrijving, bijv. Broncode op GitHub"
+                    value={linkLabel}
+                    onChange={(event) => setLinkLabel(event.target.value)}
+                    onKeyDown={handleLinkKeyDown}
+                    className={inputField}
+                  />
+                </div>
+                <div className="mt-2 flex gap-2">
+                  <input
+                    aria-label="URL"
+                    placeholder="https://… of /rapporten/…"
+                    value={linkUrl}
+                    onChange={(event) => setLinkUrl(event.target.value)}
+                    onKeyDown={handleLinkKeyDown}
+                    className={inputField}
+                  />
+                  <button
+                    type="button"
+                    onClick={handleAddLink}
+                    disabled={linkSaving}
+                    className={`${buttonSecondary} shrink-0`}
+                  >
+                    {linkSaving ? 'Bezig…' : 'Toevoegen'}
+                  </button>
+                </div>
+              </fieldset>
             </>
           ) : (
             <p className="mt-2 text-xs text-slate-400">

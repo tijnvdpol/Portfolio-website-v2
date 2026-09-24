@@ -26,7 +26,7 @@ export default function Projects() {
     <main className="mx-auto max-w-5xl px-4 py-16 sm:py-20">
       <SeoHead
         title="Projecten — Tijn van der Pol"
-        description="Overzicht van projecten van Tijn van der Pol: overnameanalyses, financiële modellen, strategische analyses en minor-projecten."
+        description="Projecten van Tijn van der Pol: webapplicaties, AI-tools en onderzoek op het snijvlak van finance en AI, elk met bewijslast."
       />
 
       <p className={eyebrow}>Portfolio</p>
@@ -34,7 +34,8 @@ export default function Projects() {
         Projecten
       </h1>
       <p className="mt-4 max-w-2xl text-lg text-ink-soft">
-        Overnameanalyses, financiële modellen, strategische analyses en projecten uit mijn minor.
+        Webapplicaties, AI-tools en onderzoek op het snijvlak van finance en AI. Bij elk project
+        vind je de bewijslast: een live demo, de broncode of het volledige rapport.
       </p>
 
       {tags && tags.length > 0 ? (

@@ -9,6 +9,7 @@ import NotFound from './pages/NotFound'
 import ProjectDetail from './pages/ProjectDetail'
 import Projects from './pages/Projects'
 
+const ReportReader = lazy(() => import('./pages/ReportReader'))
 const AdminDashboard = lazy(() => import('./pages/admin/Dashboard'))
 const AdminLogin = lazy(() => import('./pages/admin/Login'))
 const AdminProjectForm = lazy(() => import('./pages/admin/ProjectForm'))
@@ -28,6 +29,7 @@ export default function App() {
           <Route path="/projecten" element={<Projects />} />
           <Route path="/projecten/:slug" element={<ProjectDetail />} />
           <Route path="/over-mij" element={<About />} />
+          <Route path="/rapporten/:slug" element={<ReportReader />} />
         </Route>
 
         <Route path="/admin/login" element={<AdminLogin />} />

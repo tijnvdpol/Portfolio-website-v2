@@ -3,7 +3,7 @@ import { focusRing } from '../lib/styles'
 
 export default function Footer() {
   return (
-    <footer className="border-t border-line bg-paper-deep/60">
+    <footer className="border-t border-line bg-paper-deep/60 print:hidden">
       <div className="mx-auto flex max-w-5xl flex-col gap-4 px-4 py-8 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
         <p>
           © {new Date().getFullYear()} <span className="font-display text-ink">{about.name}</span>

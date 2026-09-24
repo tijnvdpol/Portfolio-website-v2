@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
 import ErrorState from '../components/ErrorState'
+import EvidenceList from '../components/EvidenceList'
 import LoadingState from '../components/LoadingState'
 import MarkdownContent from '../components/MarkdownContent'
 import SeoHead from '../components/SeoHead'
@@ -74,6 +75,12 @@ export default function ProjectDetail() {
         </div>
       </header>
 
+      {project.project_attachments.length > 0 ? (
+        <div className="mt-8">
+          <EvidenceList attachments={project.project_attachments} />
+        </div>
+      ) : null}
+
       {project.cover_image_url ? (
         <img
           src={project.cover_image_url}
@@ -85,29 +92,6 @@ export default function ProjectDetail() {
       <div className="mt-10">
         <MarkdownContent content={project.content} />
       </div>
-
-      {project.project_attachments.length > 0 ? (
-        <section className="mt-12 border-t border-line pt-8">
-          <h2 className="font-display text-2xl font-medium tracking-tight text-ink">Bijlagen</h2>
-          <ul className="mt-4 divide-y divide-line border-y border-line">
-            {project.project_attachments.map((attachment) => (
-              <li key={attachment.id}>
-                <a
-                  href={attachment.file_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`group flex items-center justify-between gap-4 py-3 text-sm font-medium text-ink transition-colors hover:text-accent ${focusRing}`}
-                >
-                  <span className="truncate">{attachment.file_name}</span>
-                  <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
-                    ↗
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ) : null}
     </main>
   )
 }
