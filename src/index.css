@@ -1,11 +1,64 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+@theme {
+  --font-sans: "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+
+  --color-paper: #f6f3ec;
+  --color-paper-deep: #eee8dc;
+  --color-card: #fbf9f4;
+  --color-ink: #16181d;
+  --color-ink-soft: #454a54;
+  --color-muted: #676b74;
+  --color-line: #ddd5c6;
+  --color-accent: #1f5c4a;
+  --color-accent-strong: #174537;
+  --color-accent-soft: #e2ebe4;
+}
+
 :root {
   color-scheme: light;
 }
 
 body {
   margin: 0;
-  font-family: system-ui, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: var(--color-accent-soft);
+  color: var(--color-accent-strong);
+}
+
+/* Grootboeklijnen als decoratief motief (bijv. placeholders zonder coverafbeelding). */
+.ledger-pattern {
+  background-color: var(--color-paper-deep);
+  background-image:
+    linear-gradient(to right, transparent 2.5rem, rgb(31 92 74 / 0.18) 2.5rem, rgb(31 92 74 / 0.18) calc(2.5rem + 1px), transparent calc(2.5rem + 1px)),
+    repeating-linear-gradient(to bottom, transparent 0, transparent 1.25rem, rgb(22 24 29 / 0.07) 1.25rem, rgb(22 24 29 / 0.07) calc(1.25rem + 1px));
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fade-up 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up {
+    animation: none;
+  }
 }

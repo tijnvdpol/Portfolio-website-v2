@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import LoadingState from './components/LoadingState'
 import ProtectedRoute from './components/ProtectedRoute'
 import PublicLayout from './components/PublicLayout'
+import About from './pages/About'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 import ProjectDetail from './pages/ProjectDetail'
@@ -26,6 +27,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/projecten" element={<Projects />} />
           <Route path="/projecten/:slug" element={<ProjectDetail />} />
+          <Route path="/over-mij" element={<About />} />
         </Route>
 
         <Route path="/admin/login" element={<AdminLogin />} />

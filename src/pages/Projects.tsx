@@ -5,6 +5,7 @@ import ProjectCard from '../components/ProjectCard'
 import SeoHead from '../components/SeoHead'
 import TagFilter from '../components/TagFilter'
 import { useProjects, useTags } from '../hooks/useProjects'
+import { eyebrow } from '../lib/styles'
 
 export default function Projects() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -22,16 +23,22 @@ export default function Projects() {
   }
 
   return (
-    <main className="mx-auto max-w-5xl px-4 py-16">
+    <main className="mx-auto max-w-5xl px-4 py-16 sm:py-20">
       <SeoHead
         title="Projecten — Tijn van der Pol"
         description="Overzicht van projecten van Tijn van der Pol: overnameanalyses, financiële modellen, strategische analyses en minor-projecten."
       />
 
-      <h1 className="text-3xl font-semibold text-slate-900">Projecten</h1>
+      <p className={eyebrow}>Portfolio</p>
+      <h1 className="mt-3 font-display text-4xl font-medium tracking-tight text-ink sm:text-5xl">
+        Projecten
+      </h1>
+      <p className="mt-4 max-w-2xl text-lg text-ink-soft">
+        Overnameanalyses, financiële modellen, strategische analyses en projecten uit mijn minor.
+      </p>
 
       {tags && tags.length > 0 ? (
-        <div className="mt-6">
+        <div className="mt-8 border-y border-line py-4">
           <TagFilter tags={tags} activeTag={activeTag} onSelect={handleSelectTag} />
         </div>
       ) : null}
@@ -40,11 +47,11 @@ export default function Projects() {
       {error ? <ErrorState message={error} /> : null}
 
       {projects && projects.length === 0 ? (
-        <p className="mt-8 text-slate-500">Geen projecten gevonden voor deze filter.</p>
+        <p className="mt-8 text-muted">Geen projecten gevonden voor deze filter.</p>
       ) : null}
 
       {projects && projects.length > 0 ? (
-        <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}

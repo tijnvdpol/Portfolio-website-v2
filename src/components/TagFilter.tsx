@@ -35,10 +35,10 @@ function FilterButton({
       type="button"
       onClick={onClick}
       aria-pressed={active}
-      className={`rounded-full border px-3 py-1 text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 ${
+      className={`rounded-full border px-3.5 py-1 text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
         active
-          ? 'border-slate-900 bg-slate-900 text-white'
-          : 'border-slate-200 text-slate-600 hover:border-slate-400'
+          ? 'border-ink bg-ink text-paper'
+          : 'border-line bg-card text-ink-soft hover:border-ink hover:text-ink'
       }`}
     >
       {children}
