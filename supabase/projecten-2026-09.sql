@@ -51,7 +51,7 @@ Factuurverwerking is een van de finance-taken die het sterkst door AI verandert.
 
 AO/IC-principes als functiescheiding en een sluitende audit trail zijn in software pas echt betrouwbaar als ze op het laagste niveau worden afgedwongen. Een knop verbergen in de interface is geen beheersmaatregel; een weigering in de database wel.$md$,
   '/covers/factuurscanner.jpg',
-  array['webapp', 'ai', 'database', 'supabase', 'interne beheersing', 'gemini'],
+  array['Webapp', 'AI', 'Database', 'Interne beheersing'],
   'Webapplicatie',
   '2026-09-23',
   true,
@@ -86,7 +86,7 @@ Een rapport van negen hoofdstukken met een geprioriteerde competentiematrix voor
 
 Het volledige rapport, inclusief het interview, de bronnen en de pitch, is hierboven onder **Bewijslast** te lezen of als PDF op te slaan.$md$,
   '/covers/onderzoek-ai-controller.jpg',
-  array['onderzoek', 'ai', 'interne beheersing', 'ai act', 'minor'],
+  array['Onderzoek', 'AI', 'Interne beheersing'],
   'Onderzoek',
   '2026-09-15',
   true,
@@ -120,7 +120,7 @@ Je geeft zelf aan welke abonnementen je al hebt, of je een studentenlicentie heb
 
 Een taalmodel is sterk in redeneren en samenvatten, maar zwak als bron van cijfers. Door de feiten (benchmarkscores) buiten het model te houden en het model alleen te laten kiezen en toelichten, wordt de uitkomst controleerbaar. Dat is hetzelfde principe als in finance: het cijfer moet herleidbaar zijn tot de bron.$md$,
   '/covers/ai-wijzer.jpg',
-  array['webapp', 'ai', 'gemini', 'api', 'typescript'],
+  array['Webapp', 'AI'],
   'AI-tool',
   '2026-09-20',
   true,
@@ -156,7 +156,7 @@ Vite, React, TypeScript, Tailwind CSS en Supabase (Auth en Postgres), gehost op 
 
 De stap van browseropslag naar een database met accounts lijkt klein, maar vraagt om nadenken over eigenaarschap van data: wie mag wat zien, en waar dwing je dat af? Net als bij autorisaties in een financieel systeem hoort die regel zo dicht mogelijk bij de data te liggen.$md$,
   '/covers/dagboekje.jpg',
-  array['webapp', 'database', 'supabase', 'react', 'typescript'],
+  array['Webapp', 'Database'],
   'Webapplicatie',
   '2026-09-22',
   false,
@@ -183,7 +183,7 @@ De berichten worden in de browser opgeslagen. Daardoor werkt de app direct en zo
 
 Dit was mijn eerste eigen webapp. Het liet me zien waar browseropslag ophoudt: geen synchronisatie tussen apparaten en geen echte beveiliging per gebruiker. Die beperkingen heb ik opgelost in de opvolger, [Dagboekje](/projecten/dagboekje), met accounts en een database.$md$,
   '/covers/digitaal-dagboek.jpg',
-  array['webapp', 'react', 'typescript', 'datavisualisatie'],
+  array['Webapp', 'Datavisualisatie'],
   'Webapplicatie',
   '2026-09-15',
   false,
