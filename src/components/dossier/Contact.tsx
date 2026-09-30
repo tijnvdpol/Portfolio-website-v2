@@ -1,11 +1,14 @@
+import { Link, useLocation } from 'react-router-dom'
 import { home } from '../../data/home'
 import { lastChanged } from '../../lib/format'
-import { focusRing } from '../../lib/styles'
+import { ctaSecondary, focusRing } from '../../lib/styles'
 
 const copy = home.contact
 
 // Contact en voetregel ("einde dossier"). Sluit de pagina af met een dubbele lijn.
 export default function Contact() {
+  const { pathname } = useLocation()
+
   return (
     <footer
       id="contact"
@@ -17,6 +20,11 @@ export default function Contact() {
           <h2 className="head-cond text-[clamp(2.75rem,8vw,4.75rem)] leading-[0.98]">
             {copy.title}
           </h2>
+          {pathname !== copy.aboutLink.to ? (
+            <Link to={copy.aboutLink.to} className={`${ctaSecondary} mt-4 self-start`}>
+              {copy.aboutLink.label} <span aria-hidden="true">→</span>
+            </Link>
+          ) : null}
         </div>
 
         <ul className="flex flex-col">

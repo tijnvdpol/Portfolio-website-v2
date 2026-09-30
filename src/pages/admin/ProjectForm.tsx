@@ -259,7 +259,7 @@ export default function AdminProjectForm() {
 
   if (loading) {
     return (
-      <main className="mx-auto max-w-3xl px-4 py-10">
+      <main className="mx-auto max-w-4xl px-4 pt-10 pb-24 md:px-10">
         <LoadingState />
       </main>
     )
@@ -267,7 +267,7 @@ export default function AdminProjectForm() {
 
   if (loadError) {
     return (
-      <main className="mx-auto max-w-3xl px-4 py-10">
+      <main className="mx-auto max-w-4xl px-4 pt-10 pb-24 md:px-10">
         <ErrorState message={loadError} />
       </main>
     )
@@ -275,9 +275,9 @@ export default function AdminProjectForm() {
 
   if (notFound) {
     return (
-      <main className="mx-auto max-w-3xl px-4 py-10">
-        <p className="text-slate-600">Project niet gevonden.</p>
-        <Link to="/admin" className="mt-2 inline-block text-sm text-slate-500 hover:text-slate-900">
+      <main className="mx-auto max-w-4xl px-4 pt-10 pb-24 md:px-10">
+        <p className="text-ink-soft">Project niet gevonden.</p>
+        <Link to="/admin" className="mt-2 inline-block text-sm font-semibold link-double">
           ← Terug naar overzicht
         </Link>
       </main>
@@ -285,24 +285,24 @@ export default function AdminProjectForm() {
   }
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10">
+    <main className="mx-auto max-w-4xl px-4 pt-10 pb-24 md:px-10">
       <SeoHead
         title={isEditing ? 'Project bewerken — Beheer' : 'Nieuw project — Beheer'}
         description="Project aanmaken of bewerken."
         noIndex
       />
 
-      <Link to="/admin" className="text-sm text-slate-500 hover:text-slate-900">
+      <Link to="/admin" className="text-sm font-semibold link-double">
         ← Terug naar overzicht
       </Link>
 
-      <h1 className="mt-4 text-2xl font-semibold text-slate-900">
+      <h1 className="head-cond mt-6 text-[clamp(2.25rem,6vw,3.5rem)] leading-none">
         {isEditing ? 'Project bewerken' : 'Nieuw project'}
       </h1>
 
       <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-6" noValidate>
         <div>
-          <label htmlFor="title" className="block text-sm font-medium text-slate-700">
+          <label htmlFor="title" className="label-mono block text-[11px] text-muted">
             Titel
           </label>
           <input
@@ -316,7 +316,7 @@ export default function AdminProjectForm() {
         </div>
 
         <div>
-          <label htmlFor="slug" className="block text-sm font-medium text-slate-700">
+          <label htmlFor="slug" className="label-mono block text-[11px] text-muted">
             Slug
           </label>
           <input
@@ -328,14 +328,14 @@ export default function AdminProjectForm() {
             onBlur={handleSlugBlur}
             className={`mt-1 font-mono ${inputField}`}
           />
-          <p className="mt-1 text-xs text-slate-400">
+          <p className="mt-1 text-xs text-muted">
             Onderdeel van de URL: /projecten/{slug || '…'}
           </p>
-          {slugWarning ? <p className="mt-1 text-xs text-red-600">{slugWarning}</p> : null}
+          {slugWarning ? <p className="mt-1 text-xs text-danger">{slugWarning}</p> : null}
         </div>
 
         <div>
-          <label htmlFor="summary" className="block text-sm font-medium text-slate-700">
+          <label htmlFor="summary" className="label-mono block text-[11px] text-muted">
             Samenvatting
           </label>
           <textarea
@@ -349,7 +349,7 @@ export default function AdminProjectForm() {
         </div>
 
         <div>
-          <label htmlFor="content" className="block text-sm font-medium text-slate-700">
+          <label htmlFor="content" className="label-mono block text-[11px] text-muted">
             Inhoud (markdown)
           </label>
           <div className="mt-1">
@@ -358,7 +358,7 @@ export default function AdminProjectForm() {
         </div>
 
         <div>
-          <label htmlFor="cover" className="block text-sm font-medium text-slate-700">
+          <label htmlFor="cover" className="label-mono block text-[11px] text-muted">
             Coverafbeelding
           </label>
           {coverImageUrl ? (
@@ -366,12 +366,12 @@ export default function AdminProjectForm() {
               <img
                 src={coverImageUrl}
                 alt=""
-                className="h-20 w-32 rounded-md border border-slate-200 object-cover"
+                className="h-20 w-32 border-[1.5px] border-ink object-cover"
               />
               <button
                 type="button"
                 onClick={() => setCoverImageUrl(null)}
-                className="text-sm text-slate-500 underline underline-offset-4 hover:text-slate-900"
+                className="text-sm font-semibold link-double"
               >
                 Verwijderen
               </button>
@@ -383,14 +383,14 @@ export default function AdminProjectForm() {
             accept="image/*"
             onChange={handleCoverChange}
             disabled={coverUploading}
-            className="mt-2 text-sm text-slate-600"
+            className="mt-2 text-sm text-ink-soft"
           />
-          {coverUploading ? <p className="mt-1 text-xs text-slate-400">Bezig met uploaden…</p> : null}
+          {coverUploading ? <p className="mt-1 text-xs text-muted">Bezig met uploaden…</p> : null}
         </div>
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div>
-            <label htmlFor="tags" className="block text-sm font-medium text-slate-700">
+            <label htmlFor="tags" className="label-mono block text-[11px] text-muted">
               Tags
             </label>
             <div className="mt-1">
@@ -399,7 +399,7 @@ export default function AdminProjectForm() {
           </div>
 
           <div>
-            <label htmlFor="category" className="block text-sm font-medium text-slate-700">
+            <label htmlFor="category" className="label-mono block text-[11px] text-muted">
               Categorie
             </label>
             <input
@@ -413,7 +413,7 @@ export default function AdminProjectForm() {
           </div>
 
           <div>
-            <label htmlFor="project_date" className="block text-sm font-medium text-slate-700">
+            <label htmlFor="project_date" className="label-mono block text-[11px] text-muted">
               Datum
             </label>
             <input
@@ -426,7 +426,7 @@ export default function AdminProjectForm() {
           </div>
 
           <div>
-            <label htmlFor="sort_order" className="block text-sm font-medium text-slate-700">
+            <label htmlFor="sort_order" className="label-mono block text-[11px] text-muted">
               Volgorde
             </label>
             <input
@@ -436,34 +436,34 @@ export default function AdminProjectForm() {
               onChange={(event) => setSortOrder(Number(event.target.value))}
               className={`mt-1 ${inputField}`}
             />
-            <p className="mt-1 text-xs text-slate-400">Laag getal wordt eerst getoond.</p>
+            <p className="mt-1 text-xs text-muted">Laag getal wordt eerst getoond.</p>
           </div>
         </div>
 
         <div className="flex flex-wrap gap-6">
-          <label className="flex items-center gap-2 text-sm text-slate-700">
+          <label className="flex items-center gap-2 text-sm text-ink-soft">
             <input
               type="checkbox"
               checked={featured}
               onChange={(event) => setFeatured(event.target.checked)}
-              className="h-4 w-4 rounded border-slate-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
+              className="size-4 accent-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             />
             Uitgelicht op home
           </label>
-          <label className="flex items-center gap-2 text-sm text-slate-700">
+          <label className="flex items-center gap-2 text-sm text-ink-soft">
             <input
               type="checkbox"
               checked={published}
               onChange={(event) => setPublished(event.target.checked)}
-              className="h-4 w-4 rounded border-slate-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
+              className="size-4 accent-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             />
             Gepubliceerd (zichtbaar voor bezoekers)
           </label>
         </div>
 
         <div>
-          <p className="block text-sm font-medium text-slate-700">Bewijslast en bijlagen</p>
-          <p className="mt-1 text-xs text-slate-500">
+          <p className="label-mono block text-[11px] text-muted">Bewijslast en bijlagen</p>
+          <p className="mt-1 text-xs text-muted">
             Upload bestanden of voeg links toe (live demo, GitHub, rapport). Ze verschijnen als
             bewijslast op de projectpagina.
           </p>
@@ -476,9 +476,9 @@ export default function AdminProjectForm() {
                     href={attachment.file_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-slate-700 underline underline-offset-4 hover:text-slate-900"
+                    className="font-semibold link-double"
                   >
-                    <span className="mr-2 text-xs font-semibold uppercase tracking-wider text-slate-400">
+                    <span className="label-mono mr-2 text-[11px] font-normal text-muted">
                       {evidenceLabel(evidenceType(attachment.file_type))}
                     </span>
                     {attachment.file_name}
@@ -486,7 +486,7 @@ export default function AdminProjectForm() {
                   <button
                     type="button"
                     onClick={() => handleDeleteAttachment(attachment)}
-                    className="text-red-600 hover:underline"
+                    className="text-danger hover:underline"
                   >
                     Verwijderen
                   </button>
@@ -502,14 +502,14 @@ export default function AdminProjectForm() {
                 multiple
                 onChange={handleAttachmentChange}
                 disabled={attachmentUploading}
-                className="mt-3 text-sm text-slate-600"
+                className="mt-3 text-sm text-ink-soft"
               />
               {attachmentUploading ? (
-                <p className="mt-1 text-xs text-slate-400">Bezig met uploaden…</p>
+                <p className="mt-1 text-xs text-muted">Bezig met uploaden…</p>
               ) : null}
 
-              <fieldset className="mt-4 rounded-md border border-slate-200 p-3">
-                <legend className="px-1 text-xs font-medium text-slate-600">Link toevoegen</legend>
+              <fieldset className="mt-4 border border-rule-strong p-3">
+                <legend className="label-mono px-1 text-[11px] text-muted">Link toevoegen</legend>
                 <div className="grid gap-2 sm:grid-cols-[10rem_1fr]">
                   <select
                     aria-label="Soort link"
@@ -555,14 +555,14 @@ export default function AdminProjectForm() {
               </fieldset>
             </>
           ) : (
-            <p className="mt-2 text-xs text-slate-400">
+            <p className="mt-2 text-xs text-muted">
               Sla het project eerst op om bijlagen toe te voegen.
             </p>
           )}
         </div>
 
         {formError ? (
-          <p role="alert" className="text-sm text-red-600">
+          <p role="alert" className="text-sm text-danger">
             {formError}
           </p>
         ) : null}
@@ -571,7 +571,7 @@ export default function AdminProjectForm() {
           <button type="submit" disabled={saving} className={buttonPrimary}>
             {saving ? 'Bezig met opslaan…' : 'Opslaan'}
           </button>
-          <Link to="/admin" className="text-sm text-slate-500 hover:text-slate-900">
+          <Link to="/admin" className="text-sm font-semibold link-double">
             Annuleren
           </Link>
         </div>

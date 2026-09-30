@@ -1,15 +1,17 @@
 export const focusRing =
   'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent'
 
-export const buttonPrimary = `inline-flex items-center gap-2 rounded-md bg-ink px-5 py-2.5 text-sm font-medium text-paper transition-colors hover:bg-accent disabled:opacity-50 ${focusRing}`
+// Knoppen en labels van de dossierstijl: vierkant, zwaar, Archivo/Plex Mono.
+export const ctaPrimary = `inline-flex h-[52px] items-center gap-2.5 bg-ink px-6 text-base font-semibold text-paper transition-colors hover:bg-accent ${focusRing}`
 
-export const buttonSecondary = `inline-flex items-center gap-2 rounded-md border border-line bg-card px-5 py-2.5 text-sm font-medium text-ink-soft transition-colors hover:border-ink hover:text-ink disabled:opacity-50 ${focusRing}`
+export const ctaSecondary = `inline-flex h-[52px] items-center gap-2.5 border-[1.5px] border-ink px-6 text-base font-semibold text-ink transition-colors hover:bg-ink hover:text-paper ${focusRing}`
 
-export const buttonOutline = `inline-flex items-center gap-2 rounded-md border border-ink px-5 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-ink hover:text-paper ${focusRing}`
+// Compacte varianten voor de beheeromgeving.
+export const buttonPrimary = `inline-flex h-11 items-center justify-center gap-2 bg-ink px-5 text-sm font-semibold text-paper transition-colors hover:bg-accent disabled:opacity-50 ${focusRing}`
+
+export const buttonSecondary = `inline-flex h-11 items-center justify-center gap-2 border-[1.5px] border-ink px-5 text-sm font-semibold text-ink transition-colors hover:bg-ink hover:text-paper disabled:opacity-50 ${focusRing}`
 
 export const inputField =
-  'w-full rounded-md border border-line bg-card px-3 py-2 text-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20'
+  'w-full border border-rule-strong bg-card px-3 py-2 text-[15px] focus:border-ink focus:outline-none focus:ring-2 focus:ring-accent/30'
 
-export const eyebrow = 'text-xs font-semibold uppercase tracking-[0.18em] text-accent'
-
-export const tagPill = 'rounded-full bg-accent-soft px-2.5 py-0.5 text-xs font-medium text-accent-strong'
+export const tagPill = 'border border-rule-strong px-2 py-[3px] font-mono text-xs text-ink-soft'

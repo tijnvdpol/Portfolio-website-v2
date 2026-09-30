@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { formulaCells, markLegend } from '../../data/formulas'
 import { home } from '../../data/home'
+import { ctaSecondary } from '../../lib/styles'
 import { useFormulaBar } from './FormulaContext'
 import { MarkIcon } from './marks'
 
@@ -95,6 +97,12 @@ export default function KeyFigures() {
             <span>{item.text}</span>
           </span>
         ))}
+      </div>
+
+      <div className="pt-4">
+        <Link to={copy.auditLink.to} className={ctaSecondary}>
+          {copy.auditLink.label} <span aria-hidden="true">→</span>
+        </Link>
       </div>
     </section>
   )

@@ -1,3 +1,5 @@
+import { focusRing } from '../lib/styles'
+
 type TagFilterProps = {
   tags: string[]
   activeTag: string | null
@@ -35,10 +37,10 @@ function FilterButton({
       type="button"
       onClick={onClick}
       aria-pressed={active}
-      className={`rounded-full border px-3.5 py-1 text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
+      className={`border px-3 py-1.5 font-mono text-xs transition-colors ${focusRing} ${
         active
           ? 'border-ink bg-ink text-paper'
-          : 'border-line bg-card text-ink-soft hover:border-ink hover:text-ink'
+          : 'border-rule-strong bg-transparent text-ink-soft hover:border-ink hover:text-ink'
       }`}
     >
       {children}

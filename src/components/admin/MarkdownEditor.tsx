@@ -14,17 +14,17 @@ export default function MarkdownEditor({ id, value, onChange }: MarkdownEditorPr
         value={value}
         onChange={(event) => onChange(event.target.value)}
         rows={16}
-        className="w-full resize-y rounded-md border border-slate-300 p-3 font-mono text-sm focus:border-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-900/20"
+        className="w-full resize-y border border-rule-strong bg-card p-3 font-mono text-sm focus:border-ink focus:outline-none focus:ring-2 focus:ring-accent/30"
         placeholder="Schrijf de projectbeschrijving in markdown…"
       />
-      <div className="rounded-md border border-slate-200 bg-slate-50 p-3">
-        <p className="mb-2 text-xs font-medium uppercase tracking-wide text-slate-400">
+      <div className="border border-line bg-card p-3">
+        <p className="label-mono mb-2 text-[11px] text-muted">
           Live preview
         </p>
         {value.trim() ? (
           <MarkdownContent content={value} />
         ) : (
-          <p className="text-sm text-slate-400">Preview verschijnt hier.</p>
+          <p className="text-sm text-muted">Preview verschijnt hier.</p>
         )}
       </div>
     </div>

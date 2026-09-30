@@ -6,7 +6,7 @@ import MarkdownContent from '../components/MarkdownContent'
 import SeoHead from '../components/SeoHead'
 import { findReport } from '../data/reports'
 import { slugify } from '../lib/slug'
-import { buttonSecondary, eyebrow, focusRing } from '../lib/styles'
+import { ctaSecondary, focusRing } from '../lib/styles'
 import NotFound from './NotFound'
 
 type LoadState = { slug: string; content: string } | { slug: string; error: string }
@@ -49,58 +49,58 @@ export default function ReportReader() {
     : []
 
   return (
-    <main className="mx-auto max-w-5xl px-4 py-16 sm:py-20">
+    <main className="px-4 pt-10 pb-24 md:px-10 lg:pt-16 xl:px-20">
       <SeoHead title={`${report.title} — Tijn van der Pol`} description={report.subtitle} />
 
       <div className="flex flex-wrap items-center justify-between gap-4 print:hidden">
         <Link
           to={`/projecten/${report.projectSlug}`}
-          className={`rounded-sm text-sm font-medium text-muted transition-colors hover:text-accent ${focusRing}`}
+          className={`text-base font-semibold link-double ${focusRing}`}
         >
-          ← Terug naar het project
+          ← Terug naar het dossier
         </Link>
-        <button type="button" onClick={() => window.print()} className={buttonSecondary}>
+        <button type="button" onClick={() => window.print()} className={ctaSecondary}>
           Afdrukken of opslaan als PDF
         </button>
       </div>
 
-      <header className="fade-up mt-8 border-b border-line pb-10">
-        <p className={eyebrow}>Onderzoeksrapport</p>
-        <h1 className="mt-3 max-w-4xl font-display text-3xl leading-tight font-medium tracking-tight text-ink sm:text-5xl">
+      <header className="fade-up mt-8 flex flex-col gap-5 border-b-4 border-double border-b-ink pb-10">
+        <p className="label-mono text-[13px] text-muted">ONDERZOEKSRAPPORT</p>
+        <h1 className="head-cond max-w-[26ch] text-[clamp(2.25rem,6vw,4rem)] leading-[1]">
           {report.title}
         </h1>
-        <p className="mt-4 max-w-3xl text-lg leading-relaxed text-ink-soft">{report.subtitle}</p>
+        <p className="max-w-3xl text-lg leading-[1.55] text-ink-soft sm:text-xl">
+          {report.subtitle}
+        </p>
 
-        <dl className="mt-8 grid gap-x-8 gap-y-4 text-sm sm:grid-cols-2 lg:grid-cols-4">
+        <dl className="mt-4 grid gap-x-8 gap-y-4 sm:grid-cols-2 lg:grid-cols-4">
           {[
             ['Auteur', report.author],
             ['Opleiding', report.program],
             ['Datum', report.date],
             ['Versie', report.version],
           ].map(([label, value]) => (
-            <div key={label} className="border-t border-line pt-3">
-              <dt className="text-xs font-semibold uppercase tracking-wider text-muted">{label}</dt>
-              <dd className="mt-1 font-medium text-ink">{value}</dd>
+            <div key={label} className="flex flex-col gap-1 border-t border-ink pt-3">
+              <dt className="label-mono text-[11px] text-muted">{label}</dt>
+              <dd className="text-[15px] font-semibold">{value}</dd>
             </div>
           ))}
         </dl>
       </header>
 
-      <div className="mt-10 grid gap-10 lg:grid-cols-12">
-        <aside className="lg:col-span-4 print:hidden">
+      <div className="mt-10 grid gap-10 lg:grid-cols-[320px_minmax(0,1fr)] lg:gap-x-16">
+        <aside className="print:hidden">
           <div className="lg:sticky lg:top-24">
             {chapters.length > 0 ? (
-              <nav aria-label="Inhoudsopgave" className="rounded-xl border border-line bg-card p-5">
-                <p className="text-xs font-semibold uppercase tracking-wider text-muted">
-                  Inhoudsopgave
-                </p>
-                <ol className="mt-3 space-y-1.5 text-sm">
+              <nav
+                aria-label="Inhoudsopgave"
+                className="border-[1.5px] border-ink bg-card p-5"
+              >
+                <p className="label-mono text-[11px] text-muted">Inhoudsopgave</p>
+                <ol className="mt-3 flex flex-col gap-2 text-[15px]">
                   {chapters.map((chapter) => (
                     <li key={chapter}>
-                      <a
-                        href={`#${slugify(chapter)}`}
-                        className={`block rounded-sm text-ink-soft transition-colors hover:text-accent ${focusRing}`}
-                      >
+                      <a href={`#${slugify(chapter)}`} className={`link-double ${focusRing}`}>
                         {chapter}
                       </a>
                     </li>
@@ -111,21 +111,21 @@ export default function ReportReader() {
           </div>
         </aside>
 
-        <article className="min-w-0 lg:col-span-8">
-          <section className="rounded-xl border border-line bg-card p-5">
-            <h2 className="text-xs font-semibold uppercase tracking-wider text-muted">Leeswijzer</h2>
-            <dl className="mt-3 space-y-2 text-sm">
+        <article className="min-w-0 max-w-3xl">
+          <section className="border-[1.5px] border-ink bg-card p-5">
+            <h2 className="label-mono text-[11px] font-normal text-muted">Leeswijzer</h2>
+            <dl className="mt-3 flex flex-col gap-2 text-[15px]">
               {report.readingGuide.map((item) => (
                 <div key={item.code} className="flex gap-3">
-                  <dt className="w-8 shrink-0 font-semibold text-accent tabular-nums">{item.code}</dt>
+                  <dt className="w-8 shrink-0 font-mono font-semibold text-pen">{item.code}</dt>
                   <dd className="text-ink-soft">
-                    <span className="font-medium text-ink">{item.label}:</span> {item.meaning}
+                    <span className="font-semibold text-ink">{item.label}:</span> {item.meaning}
                   </dd>
                 </div>
               ))}
             </dl>
-            <p className="mt-4 border-t border-line pt-4 text-sm leading-relaxed text-ink-soft">
-              <span className="font-medium text-ink">Methodologische waarschuwing.</span>{' '}
+            <p className="mt-4 border-t border-line pt-4 text-[15px] leading-[1.55] text-ink-soft">
+              <span className="font-semibold text-ink">Methodologische waarschuwing.</span>{' '}
               {report.caveat}
             </p>
           </section>

@@ -9,11 +9,12 @@ export const home = {
       'Portfolio van Tijn van der Pol, student Finance & Control: finance-software met interne beheersing op databaseniveau, en onderzoek naar AI en de controller van 2030.',
   },
 
-  // Navigatie met grootboekrekeningnummers als sectienummers.
+  // Navigatie met grootboekrekeningnummers. Padden (/…) zijn pagina's; #contact is de voetregel.
   nav: [
-    { number: '1000', label: 'Dossiers', href: '#dossiers' },
-    { number: '2000', label: 'Audit trail', href: '#groei' },
-    { number: '3000', label: 'Over mij', href: '#over' },
+    { number: '0000', label: 'Home', href: '/' },
+    { number: '1000', label: 'Audit trail', href: '/audit-trail' },
+    { number: '2000', label: 'Dossiers', href: '/projecten' },
+    { number: '3000', label: 'Over mij', href: '/over-mij' },
     { number: '4000', label: 'Contact', href: '#contact' },
   ],
 
@@ -68,19 +69,20 @@ export const home = {
     title: 'KERNCIJFERS 2026',
     hint: 'Elk cijfer heeft een bron: wijs het aan en kijk in de formulebalk',
     legendTitle: 'LEGENDA',
+    auditLink: { label: 'Bekijk de audit trail', to: '/audit-trail' },
   },
 
   dossiers: {
-    label: '1000 · DOSSIERS',
+    label: '2000 · DOSSIERS',
     title: 'Geselecteerd werk, met bewijslast.',
-    allLink: { label: 'Alle dossiers →', to: '/projecten' },
+    allLink: { label: 'Alle dossiers', to: '/projecten' },
     evidenceTitle: 'ONDERBOUWING',
     signedTitle: 'GEZIEN EN GEPARAFEERD',
     signedBy: 'T. VAN DER POL',
   },
 
   audit: {
-    label: '2000 · AUDIT TRAIL',
+    label: '1000 · AUDIT TRAIL',
     title: 'Mijn groei, onveranderbaar vastgelegd.',
     intro:
       'Na elke grow & show komt er een regel bij. Niets wordt achteraf aangepast of verwijderd, net als de audit log in de Factuurscanner.',
@@ -104,7 +106,7 @@ export const home = {
         'Grow & show om de twee weken',
         'Naast school: bijbaan in de supermarkt',
       ],
-      working: 'Werkt aan: [huidig project]',
+      working: 'Werkt aan: de Factuurscanner uitbreiden',
     },
     attachments: {
       title: 'BIJLAGEN · BUITEN HET DOSSIER',
@@ -117,6 +119,7 @@ export const home = {
     title: 'Beschikbaar voor stage, afstuderen en finance-projecten met AI.',
     // E-mail, GitHub en LinkedIn komen uit about.contact zodat ze op één plek staan.
     links: about.contact,
+    aboutLink: { label: 'Over mij', to: '/over-mij' },
     colophon: '© 2026 TIJN VAN DER POL · COLOFON: REACT, TYPESCRIPT, TAILWIND CSS, VERCEL',
     end: 'EINDE DOSSIER · LAATST GEWIJZIGD',
   },

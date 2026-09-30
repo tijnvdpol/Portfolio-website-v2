@@ -1,22 +1,25 @@
+import { Link } from 'react-router-dom'
 import { auditTrail, nextEntryNote } from '../../data/auditTrail'
 import { home } from '../../data/home'
 
 const copy = home.audit
 
 // Donkere sectie: de groei als append-only lijst. Regels komen uit data/auditTrail.ts.
-export default function AuditTrail() {
+// Op de eigen pagina (/audit-trail) is de titel de h1 van de pagina.
+export default function AuditTrail({ asPage = false }: { asPage?: boolean }) {
+  const Heading = asPage ? 'h1' : 'h2'
   return (
     <section
       id="groei"
       aria-labelledby="groei-title"
-      className="anchor-offset flex flex-col gap-12 bg-ink px-4 py-20 text-paper md:px-10 lg:py-26 xl:px-20"
+      className={`anchor-offset flex flex-col gap-12 bg-ink px-4 py-20 text-paper md:px-10 lg:py-26 xl:px-20 ${asPage ? 'min-h-[70vh]' : ''}`}
     >
       <div className="grid items-end gap-6 lg:grid-cols-[7fr_5fr] lg:gap-x-[72px]">
         <div className="flex flex-col gap-3.5">
           <p className="label-mono text-[13px] text-night-muted">{copy.label}</p>
-          <h2 id="groei-title" className="head-cond text-[clamp(2.5rem,7vw,3.75rem)] leading-none">
+          <Heading id="groei-title" className="head-cond text-[clamp(2.5rem,7vw,3.75rem)] leading-none">
             {copy.title}
-          </h2>
+          </Heading>
         </div>
         <p className="text-[17px] leading-[1.6] text-night-body">{copy.intro}</p>
       </div>
@@ -33,7 +36,7 @@ export default function AuditTrail() {
           <span className="text-right">BEWIJS</span>
         </div>
 
-        <ol className="flex flex-col" aria-label="Audit trail, nieuwste regel bovenaan">
+        <ol className="flex flex-col" aria-label="Audit trail, oudste regel bovenaan">
           {auditTrail.map((entry) => (
             <li
               key={entry.number}
@@ -48,12 +51,15 @@ export default function AuditTrail() {
                 </span>
                 {entry.change}
               </span>
-              <a
-                href={entry.evidence.href}
-                className="text-paper link-double focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-night-plus md:text-right"
-              >
-                {entry.evidence.label} ↗
-              </a>
+              {entry.evidence.href.startsWith('/') ? (
+                <Link to={entry.evidence.href} className="text-paper link-double focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-night-plus md:text-right">
+                  {entry.evidence.label} →
+                </Link>
+              ) : (
+                <a href={entry.evidence.href} target="_blank" rel="noopener noreferrer" className="text-paper link-double focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-night-plus md:text-right">
+                  {entry.evidence.label} ↗
+                </a>
+              )}
             </li>
           ))}
         </ol>

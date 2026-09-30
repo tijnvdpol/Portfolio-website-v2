@@ -2,9 +2,8 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  /* Oude pagina's (nog niet omgebouwd): Fraunces + Inter. */
+  /* Beheerpagina's (admin) zijn nog niet omgebouwd en gebruiken Inter. */
   --font-sans: "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
-  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
 
   /* Controledossier (homepage) */
   --font-head: "Archivo", system-ui, sans-serif;

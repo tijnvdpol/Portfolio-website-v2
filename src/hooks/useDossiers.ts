@@ -7,7 +7,8 @@ type AsyncState<T> = {
   error: string | null
 }
 
-export function useDossiers() {
+// `featuredOnly`: alleen de uitgelichte dossiers (homepage). Standaard alle gepubliceerde.
+export function useDossiers({ featuredOnly = false }: { featuredOnly?: boolean } = {}) {
   const [state, setState] = useState<AsyncState<Dossier[]>>({
     data: null,
     loading: true,
@@ -30,5 +31,6 @@ export function useDossiers() {
     }
   }, [])
 
-  return state
+  const data = state.data && featuredOnly ? state.data.filter((d) => d.featured) : state.data
+  return { ...state, data }
 }
