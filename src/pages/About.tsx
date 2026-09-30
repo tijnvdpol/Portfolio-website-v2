@@ -26,7 +26,7 @@ export default function About() {
               <img
                 src={about.photoUrl}
                 alt={`Profielfoto van ${about.name}`}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover object-[50%_20%]"
               />
             ) : (
               <div className="ledger-pattern grid h-full w-full place-items-center" aria-hidden="true">

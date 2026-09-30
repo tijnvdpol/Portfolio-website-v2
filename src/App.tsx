@@ -1,5 +1,6 @@
 import { Suspense, lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
+import DossierLayout from './components/dossier/DossierLayout'
 import LoadingState from './components/LoadingState'
 import ProtectedRoute from './components/ProtectedRoute'
 import PublicLayout from './components/PublicLayout'
@@ -24,8 +25,11 @@ export default function App() {
       }
     >
       <Routes>
-        <Route element={<PublicLayout />}>
+        <Route element={<DossierLayout />}>
           <Route path="/" element={<Home />} />
+        </Route>
+
+        <Route element={<PublicLayout />}>
           <Route path="/projecten" element={<Projects />} />
           <Route path="/projecten/:slug" element={<ProjectDetail />} />
           <Route path="/over-mij" element={<About />} />

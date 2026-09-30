@@ -41,6 +41,8 @@ Editor** in het Supabase dashboard, of via de [Supabase CLI](https://supabase.co
 1. `001_init.sql` — tabellen `projects` en `project_attachments`
 2. `002_rls.sql` — Row Level Security policies
 3. `003_storage.sql` — storage bucket `project-media` + policies
+4. `004_dossier.sql` — kolommen `dossier_evidence` en `dossier_stamp` op `projects`
+   (onderbouwing en stempel per dossier op de homepage)
 
 Optioneel: `supabase/seed.sql` voor drie voorbeeldprojecten.
 
@@ -48,6 +50,10 @@ Optioneel: `supabase/seed.sql` voor drie voorbeeldprojecten.
 (Factuurscanner, het onderzoek naar AI en de financial controller, AI Wijzer, Dagboekje en
 Digitaal Dagboek), inclusief bewijslast. Eenmalig uitvoeren in de SQL Editor; het script draait
 in één transactie.
+
+Na `004_dossier.sql`: `supabase/dossiers-2026-09.sql` vult stempel en onderbouwing van de drie
+uitgelichte projecten (D-01 t/m D-03). Zonder deze migratie werkt de homepage nog steeds, maar
+zonder stempels en onderbouwing bij de dossiers.
 
 Daarnaast eenmalig in het dashboard:
 
@@ -81,6 +87,22 @@ inhoudsopgave en een knop om af te drukken of als PDF op te slaan). Voeg daarna 
 een link van het soort *Rapport* toe naar `/rapporten/<slug>`.
 
 Coverafbeeldingen van de huidige projecten staan in `public/covers/`.
+
+### Homepage ("Controledossier")
+
+De homepage staat los van `PublicLayout` (`components/dossier/DossierLayout.tsx`, alleen route `/`).
+De teksten en cijfers staan in `src/data/`, niet in de componenten:
+
+| Bestand | Inhoud |
+| ------- | ------ |
+| `home.ts` | hero, demo, navigatie, over mij, contact |
+| `formulas.ts` | kerncijfers met formule en bron (voedt de formulebalk) |
+| `auditTrail.ts` | de audit trail van mijn groei; regel toevoegen na elke grow & show |
+| `bijlagen.ts` | de vijf polaroids (foto's in `public/bijlagen/`) |
+
+Dossiers (D-01, D-02, ...) komen uit de uitgelichte projecten in Supabase; stempel en
+onderbouwing staan in `dossier_stamp` en `dossier_evidence`. De datum "gewijzigd" komt uit de
+laatste commit (`vite.config.ts`).
 
 ## Mapstructuur
 

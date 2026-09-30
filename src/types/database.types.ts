@@ -1,5 +1,19 @@
 // Handmatig geschreven Supabase database types (geen Supabase CLI beschikbaar).
 // Houd dit bestand in sync met supabase/migrations/001_init.sql.
+// Homepage-dossier: onderbouwingsregels (met optionele link) en de stempel per project.
+// Zie supabase/migrations/004_dossier.sql.
+export type DossierEvidence = {
+  label: string
+  href?: string
+}
+
+export type DossierStamp = {
+  label: string
+  value: string
+  detail: string
+  tilt: number
+}
+
 export type Database = {
   public: {
     Tables: {
@@ -17,6 +31,8 @@ export type Database = {
           featured: boolean
           published: boolean
           sort_order: number
+          dossier_evidence: DossierEvidence[]
+          dossier_stamp: DossierStamp | null
           created_at: string
           updated_at: string
         }
@@ -33,6 +49,8 @@ export type Database = {
           featured?: boolean
           published?: boolean
           sort_order?: number
+          dossier_evidence?: DossierEvidence[]
+          dossier_stamp?: DossierStamp | null
           created_at?: string
           updated_at?: string
         }
@@ -49,6 +67,8 @@ export type Database = {
           featured?: boolean
           published?: boolean
           sort_order?: number
+          dossier_evidence?: DossierEvidence[]
+          dossier_stamp?: DossierStamp | null
           created_at?: string
           updated_at?: string
         }
@@ -96,7 +116,11 @@ export type Database = {
   }
 }
 
-export type Project = Database['public']['Tables']['projects']['Row']
+type DossierColumns = 'dossier_evidence' | 'dossier_stamp'
+
+// Project zoals de publieke pagina's en het admin-formulier het kennen (zonder dossierkolommen).
+export type Project = Omit<Database['public']['Tables']['projects']['Row'], DossierColumns>
+export type ProjectDossier = Database['public']['Tables']['projects']['Row']
 export type ProjectInsert = Database['public']['Tables']['projects']['Insert']
 export type ProjectUpdate = Database['public']['Tables']['projects']['Update']
 

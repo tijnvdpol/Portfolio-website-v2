@@ -21,7 +21,7 @@ export const about = {
   availability: 'Beschikbaar voor stage, afstudeeropdrachten en innovatieve finance-projecten.',
 
   // URL of pad (bijv. '/profielfoto.jpg' in de map public/). Leeg = monogram.
-  photoUrl: '',
+  photoUrl: '/portret.jpg',
 
   intro: [
     'Hoi! Ik ben Tijn, een enthousiaste en leergierige vierdejaars HBO-student Finance & Control. Mijn passie ligt op het snijvlak van klassieke financiële beheersing en moderne technologische vernieuwing.',
@@ -87,5 +87,10 @@ export const about = {
   contact: [
     { label: 'E-mail', value: 'tijnvanderpol@gmail.com', href: 'mailto:tijnvanderpol@gmail.com' },
     { label: 'GitHub', value: 'github.com/tijnvdpol', href: 'https://github.com/tijnvdpol' },
+    {
+      label: 'LinkedIn',
+      value: 'linkedin.com/in/tijn-van-der-pol',
+      href: 'https://www.linkedin.com/in/tijn-van-der-pol-47534143a/',
+    },
   ] satisfies ContactLink[],
 }
