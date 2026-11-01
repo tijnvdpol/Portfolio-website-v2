@@ -51,6 +51,41 @@ export const reports: Report[] = [
         (module) => module.default,
       ),
   },
+  {
+    slug: 'juridische-grenzen-folderscanner-superunie',
+    projectSlug: 'onderzoek-juridische-grenzen-folderscanner',
+    title: 'Superunie mag folders scannen, binnen strikte grenzen',
+    subtitle:
+      'Juridisch en ethisch onderzoek naar een interne folderscanner: auteursrecht, databankenrecht, gebruiksvoorwaarden, AI Act, mededingingsrecht, een risicomatrix en aanbevelingen.',
+    author: 'Tijn van der Pol',
+    program: 'Finance & Control (hbo) — opdrachtgever Superunie',
+    date: 'November 2026',
+    version: '1.0 (peildatum 1 november 2026)',
+    readingGuide: [
+      {
+        code: '[V]',
+        label: 'Vaststaand',
+        meaning: 'Wettekst of vaste rechtspraak, met artikel, zaaknummer of ECLI.',
+      },
+      {
+        code: '[I]',
+        label: 'Interpretatie',
+        meaning: 'Eigen toepassing op de folderscanner of een grijs gebied.',
+      },
+      {
+        code: '[T]',
+        label: 'Te verifiëren',
+        meaning:
+          'Bron niet volledig nagelezen: de vindplaats is de standaardvindplaats, maar tekst, randnummer of ECLI moet nog worden gecontroleerd.',
+      },
+    ],
+    caveat:
+      'Dit is een studentenonderzoek en geen juridisch advies. Websitevoorwaarden, robots.txt-bestanden en rechtspraak kunnen na de peildatum veranderen. Laat de conclusies over mededinging en het scrapen van specifieke ketens vóór ingebruikname toetsen door de compliance officer of een externe jurist van Superunie.',
+    load: () =>
+      import('../content/rapporten/juridische-grenzen-folderscanner-superunie.md?raw').then(
+        (module) => module.default,
+      ),
+  },
 ]
 
 export function findReport(slug: string | undefined): Report | undefined {

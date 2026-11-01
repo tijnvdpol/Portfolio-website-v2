@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mag dit eigenlijk wel?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+/* Layout: één 16:9-podium dat naar het scherm schaalt. Links en rechts de juridische labels, in het midden de (nagemaakte) folder, onderaan wat ik verander. */
+:root {
+  --ink: #0F1E33;          /* podium */
+  --ink-2: #18304F;        /* vlakken op het podium */
+  --paper: #F5F2EA;        /* labels */
+  --folder: #FFD23F;       /* folder van de keten */
+  --folder-red: #E0262D;
+  --line: #8FA7C6;         /* verbindingslijnen, secundaire tekst */
+  --text: #EAF0F7;
+  --text-dark: #13213A;
+  --high: #D62828; --mid: #E39B00; --low: #2A9D61;
+  --f-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-folder: "Anton", Impact, "Arial Narrow", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body { background: var(--ink); color: var(--text); font-family: var(--f-body); overflow: hidden; }
+
+#viewport { position: fixed; inset: 0; display: grid; place-items: center; }
+#stage {
+  position: absolute; left: 50%; top: 50%;
+  width: 1600px; height: 900px;
+  transform-origin: center center;
+  background: radial-gradient(1200px 700px at 50% 45%, var(--ink-2), var(--ink) 70%);
+}
+
+/* Kop */
+header { position: absolute; left: 60px; right: 60px; top: 36px; display: flex; justify-content: space-between; align-items: flex-end; }
+.eyebrow { font-family: var(--f-mono); font-size: 17px; letter-spacing: .04em; color: var(--line); margin: 0 0 6px; }
+h1 { font-family: var(--f-display); font-weight: 800; font-size: 60px; line-height: 1; margin: 0; text-wrap: balance; }
+.legend { display: flex; flex-direction: column; gap: 8px; font-size: 16px; color: var(--line); align-items: flex-end; }
+.legend .row { display: flex; gap: 14px; align-items: center; }
+.sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: -2px; margin-right: 6px; }
+.sw.folder { background: var(--folder); }
+.sw.scan { border: 2px dashed #7FD3FF; }
+.pill { white-space: nowrap; flex: none; font-family: var(--f-mono); font-size: 13px; text-transform: uppercase; letter-spacing: .06em; padding: 3px 9px; border-radius: 999px; color: #fff; }
+.pill.high { background: var(--high); } .pill.mid { background: var(--mid); color: #2a1a00; } .pill.low { background: var(--low); }
+
+/* Hoofdgebied */
+main { position: absolute; left: 60px; right: 60px; top: 138px; height: 572px; display: grid; grid-template-columns: 390px 1fr 390px; gap: 48px; }
+.col { display: flex; flex-direction: column; justify-content: space-between; gap: 18px; }
+
+.label {
+  position: relative; background: var(--paper); color: var(--text-dark);
+  border-radius: 10px; padding: 11px 16px 11px 22px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+  transition: opacity .45s ease, transform .45s ease;
+}
+.label::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 7px; border-radius: 10px 0 0 10px; background: var(--sev); }
+.label.high { --sev: var(--high); } .label.mid { --sev: var(--mid); } .label.low { --sev: var(--low); }
+.label .top { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
+.num { width: 30px; height: 30px; border-radius: 50%; background: var(--text-dark); color: var(--paper); display: grid; place-items: center; font-family: var(--f-display); font-weight: 800; font-size: 17px; flex: none; }
+.label h2 { font-family: var(--f-display); font-weight: 800; font-size: 23px; line-height: 1.1; margin: 0; flex: 1; }
+.label p { font-size: 15.5px; line-height: 1.28; margin: 0; }
+.label .src { font-family: var(--f-mono); font-size: 12.5px; color: #4b5d78; margin-top: 5px; }
+.after { font-family: var(--f-mono); font-size: 12.5px; color: #2b3a52; margin-top: 6px; padding-top: 6px; border-top: 1px dashed #c9cfd8; transition: opacity .45s ease; }
+.after b { white-space: nowrap; font-weight: 500; color: #fff; background: var(--low); border-radius: 999px; padding: 2px 9px; margin-left: 6px; text-transform: uppercase; letter-spacing: .04em; }
+
+/* Folder in browservenster */
+.browser { align-self: stretch; display: flex; flex-direction: column; border-radius: 12px; overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,.45); background: #fff; }
+.bar { height: 44px; background: #E7E9EE; display: flex; align-items: center; gap: 8px; padding: 0 14px; flex: none; }
+.dot { width: 11px; height: 11px; border-radius: 50%; background: #C4C8D0; }
+.url { margin-left: 10px; flex: 1; height: 28px; border-radius: 6px; background: #fff; color: #3a4558; font-family: var(--f-mono); font-size: 14px; display: flex; align-items: center; padding: 0 12px 0 24px; }
+.page { flex: 1; background: var(--folder); padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; position: relative; }
+.fhead { display: flex; justify-content: space-between; align-items: baseline; color: var(--folder-red); }
+.brand { font-family: var(--f-folder); font-size: 34px; letter-spacing: .02em; }
+.week { font-family: var(--f-body); font-weight: 700; font-size: 15px; color: #5a3b00; }
+
+.tile { background: #fff; border-radius: 8px; display: grid; grid-template-columns: 190px 1fr; gap: 16px; padding: 16px; position: relative; flex: 1; }
+.product { background: #F1E3C4; border-radius: 6px; display: grid; place-items: center; position: relative; }
+.wrapper { width: 120px; height: 170px; background: linear-gradient(135deg, #C9302C, #8E1B19); border-radius: 6px; display: grid; place-items: center; transform: rotate(-6deg); box-shadow: 0 8px 18px rgba(0,0,0,.25); }
+.wrapper span { font-family: var(--f-folder); font-size: 120px; color: #F3D27A; line-height: 1; }
+.info { display: flex; flex-direction: column; gap: 8px; }
+.burst { align-self: flex-start; background: var(--folder-red); color: #fff; font-family: var(--f-folder); font-size: 30px; line-height: 1; padding: 8px 12px; transform: rotate(-2deg); border-radius: 4px; }
+.pname { font-family: var(--f-body); font-weight: 700; font-size: 19px; color: #1d1d1d; }
+.prices { display: flex; gap: 14px; align-items: flex-end; }
+.price { font-family: var(--f-folder); color: var(--folder-red); line-height: 1; }
+.price small { display: block; font-family: var(--f-body); font-weight: 700; font-size: 13px; color: #444; margin-bottom: 3px; }
+.price b { font-weight: 400; font-size: 46px; font-variant-numeric: tabular-nums; }
+.small-print { font-size: 13px; color: #555; margin-top: auto; padding-left: 20px; }
+
+.minis { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; flex: none; }
+.mini { background: #fff; border-radius: 6px; padding: 8px 10px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 700; color: #333; }
+.mini b { font-family: var(--f-folder); font-weight: 400; color: var(--folder-red); font-size: 22px; }
+
+/* Wat de scanner toevoegt */
+.scan { font-family: var(--f-mono); border: 2px dashed #1B8AC4; background: rgba(230,246,255,.95); color: #0B4F73; border-radius: 6px; }
+.scan.badge { position: absolute; top: -12px; right: 14px; padding: 6px 26px 6px 10px; font-size: 13px; font-weight: 500; }
+.compare { padding: 8px 30px 8px 12px; font-size: 14px; display: flex; justify-content: space-between; flex: none; }
+
+/* Markeringen op de hotspots */
+.hot { position: relative; }
+.marker { position: absolute; width: 26px; height: 26px; border-radius: 50%; background: var(--text-dark); color: #fff; font-family: var(--f-display); font-weight: 800; font-size: 14px; display: grid; place-items: center; box-shadow: 0 0 0 3px var(--msev, #fff); z-index: 3; transition: opacity .35s ease; }
+
+svg#lines { position: absolute; inset: 0; pointer-events: none; z-index: 2; overflow: visible; }
+svg#lines path { fill: none; stroke: var(--line); stroke-width: 2; stroke-dasharray: 5 5; transition: opacity .45s ease; }
+svg#lines circle { fill: var(--line); transition: opacity .45s ease; }
+
+/* Onderstrook */
+.changes { position: absolute; left: 60px; right: 60px; top: 724px; height: 122px; display: grid; grid-template-columns: 220px 1fr 1fr 1fr; gap: 20px; align-items: stretch; transition: opacity .5s ease; }
+.changes h3 { font-family: var(--f-display); font-weight: 800; font-size: 26px; line-height: 1.05; margin: 0; align-self: center; text-wrap: balance; }
+.change { background: var(--ink-2); border: 1px solid #2B4A72; border-radius: 10px; padding: 12px 14px; font-size: 16px; line-height: 1.3; display: flex; gap: 10px; }
+.change .refs { font-family: var(--f-mono); font-size: 13px; color: var(--line); display: block; margin-top: 6px; }
+.change .chk { flex: none; width: 24px; height: 24px; border-radius: 6px; background: var(--low); color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 15px; }
+
+footer { position: absolute; left: 60px; right: 60px; bottom: 8px; display: flex; justify-content: space-between; font-size: 13px; color: var(--line); }
+
+/* Bediening (buiten het podium) */
+#controls { position: fixed; right: 14px; top: 12px; display: flex; gap: 6px; z-index: 10; opacity: .35; transition: opacity .2s; }
+#controls:hover, #controls:focus-within { opacity: 1; }
+#controls button { font: 700 14px var(--f-body); color: var(--text); background: var(--ink-2); border: 1px solid #2B4A72; border-radius: 8px; padding: 7px 12px; cursor: pointer; }
+#controls #start { background: var(--folder); color: var(--text-dark); border-color: var(--folder); }
+#stepinfo { position: fixed; left: 14px; top: 14px; font: 13px var(--f-mono); color: var(--line); opacity: .6; z-index: 10; }
+button:focus-visible, input:focus-visible { outline: 3px solid #7FD3FF; outline-offset: 2px; }
+
+/* Verborgen in presentatiemodus */
+.off { opacity: 0 !important; }
+.label.off { transform: translateY(8px); }
+
+.pulse { animation: pulse 1.4s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { box-shadow: 0 0 0 3px var(--msev), 0 0 0 0 rgba(255,255,255,.6);} 50% { box-shadow: 0 0 0 3px var(--msev), 0 0 0 12px rgba(255,255,255,0);} }
+#hint { position: absolute; left: 0; right: 0; top: 760px; text-align: center; font: 18px var(--f-mono); color: var(--line); transition: opacity .4s; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+</style>
+</head>
+<body>
+<div id="viewport">
+<div id="stage">
+
+  <header>
+    <div>
+      <p class="eyebrow">FOLDERSCANNER VOOR SUPERUNIE · JURIDISCH &amp; ETHISCH ONDERZOEK</p>
+      <h1>Mag dit eigenlijk wel?</h1>
+    </div>
+    <div class="legend">
+      <div class="row"><span><span class="sw folder"></span>folder van de keten</span><span><span class="sw scan"></span>wat mijn scanner toevoegt</span></div>
+      <div class="row">score = kans × impact: <span class="pill high">15+ hoog</span><span class="pill mid">8–12 middel</span><span class="pill low">1–6 laag</span></div>
+    </div>
+  </header>
+
+  <svg id="lines" viewBox="0 0 1600 900" preserveAspectRatio="none"></svg>
+
+  <main>
+    <div class="col">
+      <article class="label mid" data-step="1" data-target="h1" data-side="left">
+        <div class="top"><span class="num">1</span><h2>Voorwaarden</h2><span class="pill mid">12 · middel</span></div>
+        <p>Jumbo en Dirk verbieden scrapen met robots expliciet. Die slaat de tool over tot er schriftelijke toestemming is.</p>
+        <div class="src">HvJ EU C-30/14 (Ryanair)</div>
+        <div class="after">3 × 4 = 12 → na maatregel <b>4 · laag</b></div>
+      </article>
+      <article class="label mid" data-step="2" data-target="h2" data-side="left">
+        <div class="top"><span class="num">2</span><h2>Auteursrecht</h2><span class="pill mid">12 · middel</span></div>
+        <p>Naam, prijs en korting zijn feiten, dus vrij. De kopie om ze te lezen mag via de TDM-uitzondering, als die direct wordt gewist.</p>
+        <div class="src">art. 15o Aw · art. 4a Dbw</div>
+        <div class="after">3 × 4 = 12 → na maatregel <b>4 · laag</b></div>
+      </article>
+      <article class="label high" data-step="4" data-target="h4" data-side="left">
+        <div class="top"><span class="num">4</span><h2>AI leest uit</h2><span class="pill high">16 · hoog</span></div>
+        <p>Een model leest "2e halve prijs" snel als 50%. Het is 25%. De AI Act zelf is licht: minimaal risico.</p>
+        <div class="src">AI Act art. 4 (AI-geletterdheid)</div>
+        <div class="after">4 × 4 = 16 → na maatregel <b>4 · laag</b></div>
+      </article>
+    </div>
+
+    <div class="browser">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <div class="url hot" id="h1">versmarkt.nl/folder/week-45</div>
+      </div>
+      <div class="page">
+        <div class="fhead"><span class="brand">VERSMARKT</span><span class="week">Weekfolder 45 · 2 t/m 8 november</span></div>
+        <div class="tile">
+          <div class="product hot" id="h2"><div class="wrapper"><span>S</span></div></div>
+          <div class="info">
+            <span class="burst">2e HALVE PRIJS</span>
+            <span class="pname">Chocoladeletter melk, 135 g</span>
+            <div class="prices hot" id="h3">
+              <div class="price"><small>1 stuk</small><b>2,29</b></div>
+              <div class="price"><small>2 stuks</small><b>3,43</b></div>
+            </div>
+            <div class="small-print hot" id="h4">Max. 3 per klant. Geldig van 2 t/m 8 november.</div>
+          </div>
+          <div class="scan badge hot" id="h5">TOPDEAL −25% · door regel</div>
+        </div>
+        <div class="minis">
+          <div class="mini">Mandarijnen 1 kg <b>1,99</b></div>
+          <div class="mini">Speculaas 400 g <b>0,99</b></div>
+          <div class="mini">Pepernoten 300 g <b>1,49</b></div>
+        </div>
+        <div class="scan compare hot" id="h6"><span>Eigen inkoopactie Superunie, zelfde week</span><span>−15%</span></div>
+      </div>
+    </div>
+
+    <div class="col">
+      <article class="label mid" data-step="5" data-target="h5" data-side="right">
+        <div class="top"><span class="num">5</span><h2>Bias &amp; uitleg</h2><span class="pill mid">12 · middel</span></div>
+        <p>Vallen Jumbo en Dirk weg, dan is "de beste deal" scheef. De inkoper moet zien welke keten ontbreekt en waar de AI ophoudt.</p>
+        <div class="src">HLEG Ethics Guidelines (EU)</div>
+        <div class="after">4 × 3 = 12 → na maatregel <b>4 · laag</b></div>
+      </article>
+      <article class="label mid" data-step="3" data-target="h3" data-side="right">
+        <div class="top"><span class="num">3</span><h2>Databankenrecht</h2><span class="pill mid">8 · middel</span></div>
+        <p>De hele catalogus ophalen is riskant. Alleen de aanbiedingen, één keer per week en niets publiceren: dan nauwelijks schade.</p>
+        <div class="src">HvJ EU C-762/19 (CV-Online)</div>
+        <div class="after">2 × 4 = 8 → na maatregel <b>4 · laag</b></div>
+      </article>
+      <article class="label high" data-step="6" data-target="h6" data-side="right">
+        <div class="top"><span class="num">6</span><h2>Mededinging</h2><span class="pill high">15 · hoog</span></div>
+        <p>De leden hebben samen ±25% marktaandeel. Prijzen per keten per product delen met leden noemt de ACM "niet toegestaan".</p>
+        <div class="src">art. 6 Mw · ACM-Leidraad vb. 7</div>
+        <div class="after">3 × 5 = 15 → na maatregel <b>5 · laag</b></div>
+      </article>
+    </div>
+  </main>
+
+  <p id="hint">druk op spatie</p>
+
+  <section class="changes" data-step="7">
+    <h3>Mag het? Ja, als ik dit verander</h3>
+    <div class="change"><span class="chk">✓</span><div>Jumbo, Dirk en Aldi uit tot er toestemming is. Opt-outs checken, nooit inloggen of omzeilen.<span class="refs">M01 · M03 · M04</span></div></div>
+    <div class="change"><span class="chk">✓</span><div>De AI leest alleen het mechanisme, de code rekent de korting. Een mens bevestigt elke topdeal.<span class="refs">M10 · M11 · M12</span></div></div>
+    <div class="change"><span class="chk">✓</span><div>Alleen gepubliceerde folders. Alleen Superunie-inkoop heeft toegang, de leden niet.<span class="refs">M02 · M07 · M08</span></div></div>
+  </section>
+
+  <footer><span>Scores uit mijn risicomatrix: 32 risico's, 4 hoog, na maatregelen 0 hoog · peildatum 1 nov 2026 · folder is nagemaakt · studentenonderzoek, geen juridisch advies</span><span>Tijn van der Pol</span></footer>
+</div>
+</div>
+
+<div id="stepinfo"></div>
+<div id="controls">
+  <button id="start" type="button">Start presentatie</button>
+  <button id="prev" type="button" aria-label="Vorige stap">◀</button>
+  <button id="next" type="button" aria-label="Volgende stap">▶</button>
+  <button id="all" type="button">Overzicht</button>
+  <button id="fs" type="button">Volledig scherm</button>
+</div>
+
+<script>
+(function () {
+  const stage = document.getElementById('stage');
+  const svg = document.getElementById('lines');
+  const labels = [...document.querySelectorAll('.label')];
+  const changes = document.querySelector('.changes');
+  const hint = document.getElementById('hint');
+  const info = document.getElementById('stepinfo');
+  const LAST = 7;
+  let step = LAST; // opent in het overzicht, zodat alles direct zichtbaar is
+  let scale = 1;
+  const sevColor = { high: 'var(--high)', mid: 'var(--mid)', low: 'var(--low)' };
+
+  function fit() {
+    scale = Math.min(window.innerWidth / 1600, window.innerHeight / 900);
+    stage.style.transform = `translate(-50%, -50%) scale(${scale})`;
+    draw();
+  }
+
+  function rel(el) {
+    const s = stage.getBoundingClientRect(), r = el.getBoundingClientRect();
+    return { x: (r.left - s.left) / scale, y: (r.top - s.top) / scale, w: r.width / scale, h: r.height / scale };
+  }
+
+  // Markers op de hotspots
+  labels.forEach(l => {
+    const t = document.getElementById(l.dataset.target);
+    const m = document.createElement('span');
+    m.className = 'marker';
+    m.textContent = l.querySelector('.num').textContent;
+    const sev = ['high', 'mid', 'low'].find(c => l.classList.contains(c));
+    m.style.setProperty('--msev', sevColor[sev]);
+    if (l.dataset.side === 'left') { m.style.left = '-13px'; } else { m.style.right = '-13px'; }
+    m.style.top = 'calc(50% - 13px)';
+    t.appendChild(m);
+    l._marker = m;
+  });
+
+  function draw() {
+    svg.innerHTML = '';
+    labels.forEach(l => {
+      const t = document.getElementById(l.dataset.target);
+      const a = rel(l), b = rel(t);
+      const left = l.dataset.side === 'left';
+      const x1 = left ? a.x + a.w : a.x, y1 = a.y + a.h / 2;
+      const x2 = left ? b.x : b.x + b.w, y2 = b.y + b.h / 2;
+      const mx = left ? x1 + 24 : x1 - 24;
+      const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      p.setAttribute('d', `M${x1},${y1} L${mx},${y1} L${x2},${y2}`);
+      const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      c.setAttribute('cx', x1); c.setAttribute('cy', y1); c.setAttribute('r', 4);
+      const on = +l.dataset.step <= step;
+      p.classList.toggle('off', !on); c.classList.toggle('off', !on);
+      svg.append(p, c);
+    });
+  }
+
+  function render() {
+    labels.forEach(l => {
+      const n = +l.dataset.step, on = n <= step;
+      l.classList.toggle('off', !on);
+      l._marker.classList.toggle('off', !on);
+      l._marker.classList.toggle('pulse', n === step && step < LAST);
+      l.querySelector('.after').classList.toggle('off', step < LAST);
+    });
+    changes.classList.toggle('off', step < LAST);
+    hint.classList.toggle('off', step !== 0);
+    info.textContent = step === LAST ? 'overzicht · spatie/→ volgende, ← vorige' : `stap ${step} van ${LAST}`;
+    draw();
+  }
+
+  function go(n) { step = Math.max(0, Math.min(LAST, n)); render(); }
+  function fullscreen() {
+    try {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => {});
+      else document.exitFullscreen().catch(() => {});
+    } catch (e) {}
+  }
+
+  document.getElementById('start').addEventListener('click', () => go(0));
+  document.getElementById('prev').addEventListener('click', () => go(step - 1));
+  document.getElementById('next').addEventListener('click', () => go(step + 1));
+  document.getElementById('all').addEventListener('click', () => go(LAST));
+  document.getElementById('fs').addEventListener('click', fullscreen);
+  stage.addEventListener('click', () => go(step + 1));
+
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT') return;
+    if ([' ', 'ArrowRight', 'PageDown', 'Enter'].includes(e.key)) { e.preventDefault(); go(step + 1); }
+    else if (['ArrowLeft', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); go(step - 1); }
+    else if (e.key === 'Home') go(0);
+    else if (e.key === 'End' || e.key === 'o' || e.key === 'Escape') go(LAST);
+    else if (e.key === 'f') fullscreen();
+  });
+
+  window.addEventListener('resize', fit);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  fit(); render();
+})();
+</script>
+</body>
+</html>
