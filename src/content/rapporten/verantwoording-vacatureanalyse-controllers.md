@@ -1,5 +1,3 @@
-# Verantwoording zoekproces: vacatureanalyse (junior) controllers en AI-vaardigheden
-
 Uitgevoerd op 4 november 2026 met webzoeken (Claude). Peildatum voor "afgelopen 3 maanden": vanaf 4 augustus 2026.
 
 ## Batch 1: Retail / consumentenmarkt
@@ -50,14 +48,14 @@ Uitgevoerd op 4 november 2026 met webzoeken (Claude). Peildatum voor "afgelopen 
 - Grootste betrouwbaarheidsrisico: bij Robert Half spreekt de plaatsingsdatum op de overzichtspagina de pagina-metadata tegen.
 - Indeed, LinkedIn, Werkzoeken.nl, Magnet.me en de meeste overheidsvacaturesites waren niet te openen. Daardoor komen de resultaten vooral van wervingsbureaus (Robert Walters, Robert Half) en een paar carrièrepagina's van werkgevers. Dat kan het beeld kleuren.
 
-## Eerste observaties (voor jouw analyse, zelf toetsen)
+## Eerste observaties ronde 1
 - AI wordt in 3 van de 25 vacatures expliciet genoemd: Wédéflex, Settels Savenije en WeFact. In alle drie de gevallen sterk, en steeds bij kleinere of technologiegerichte organisaties.
 - 22 van de 25 vacatures noemen geen AI. Wel worden Excel (11x), Power BI of BI-dashboards (7x), AFAS (4x) en ERP-systemen vaak gevraagd.
 - "Automatiseren" en "datagedreven werken" komen veel vaker voor dan AI. Werkgevers lijken eerder te vragen om digitale basisvaardigheden en procesautomatisering dan om AI-vaardigheden.
 
 ---
 
-# Ronde 2: via de browser in de desktop-app (4 november 2026, middag)
+## Ronde 2: via de browser in de desktop-app (4 november 2026, middag)
 
 **Bronnen:** Indeed (nl.indeed.com) en Nationale Vacaturebank. Daarnaast is de vacature van Vitals overgenomen uit ronde 1, omdat er op Indeed geen enkele controllervacature in sportvoeding te vinden was.
 
@@ -89,7 +87,7 @@ Uitgevoerd op 4 november 2026 met webzoeken (Claude). Peildatum voor "afgelopen 
 
 ---
 
-# Ronde 3: LinkedIn (4 november 2026, middag)
+## Ronde 3: LinkedIn (4 november 2026, middag)
 
 **Bron:** de openbare vacatures op LinkedIn, zonder inloggen, via de browser in de desktop-app. Gezocht in Nederland, alleen vacatures uit de afgelopen 30 dagen, gesorteerd op datum. LinkedIn toont een exacte plaatsingsdatum, dus het datumprobleem van Indeed speelt hier niet.
 
