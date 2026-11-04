@@ -161,7 +161,7 @@ from (
 
     ('onderzoek-vragen-werkgevers-om-ai', 'Interactieve uitkomst: "Vragen werkgevers om AI?"', '/presentaties/vragen-werkgevers-om-ai.html', 'document'),
     ('onderzoek-vragen-werkgevers-om-ai', 'Vacatureanalyse met alle 75 vacatures (Excel)', '/bewijs/vacatureanalyse-controllers-ai.xlsx', 'document'),
-    ('onderzoek-vragen-werkgevers-om-ai', 'Verantwoording zoekproces (md)', '/bewijs/verantwoording-zoekproces-vacatureanalyse.md', 'document')
+    ('onderzoek-vragen-werkgevers-om-ai', 'Verantwoording zoekproces lezen', '/rapporten/verantwoording-vacatureanalyse-controllers', 'reader')
 ) as v (slug, file_name, file_url, file_type)
 join public.projects p on p.slug = v.slug
 where not exists (select 1 from public.project_attachments a where a.project_id = p.id);
