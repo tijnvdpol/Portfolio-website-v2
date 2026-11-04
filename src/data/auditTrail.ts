@@ -47,7 +47,56 @@ export const auditTrail: AuditEntry[] = [
     change: 'Portfolio v3: opnieuw opgebouwd rond bewijslast',
     evidence: { label: 'site', href: '/projecten' },
   },
+  {
+    number: '0006',
+    date: '01-11-2026',
+    sprint: 'G&S 5',
+    change: 'Onderzoek juridische grenzen folderscanner Superunie afgerond, met presentatie',
+    evidence: { label: 'D-09', href: '/projecten/onderzoek-juridische-grenzen-folderscanner' },
+  },
+  {
+    number: '0007',
+    date: '01-11-2026',
+    sprint: 'G&S 5',
+    change: 'AI-kloon opgeleverd: chatbot die alleen uit eigen documenten antwoordt',
+    evidence: { label: 'D-07', href: '/projecten/ai-kloon' },
+  },
+  {
+    number: '0008',
+    date: '01-11-2026',
+    sprint: 'G&S 5',
+    change: 'Website Supermarkt Hisar live gezet',
+    evidence: { label: 'D-08', href: '/projecten/supermarkt-hisar' },
+  },
+  {
+    number: '0009',
+    date: '04-11-2026',
+    sprint: 'G&S 5',
+    change: 'Pet your dog gebouwd tot en met fase 3: eigen hond uit een foto',
+    evidence: { label: 'D-10', href: '/projecten/pet-your-dog' },
+  },
+  {
+    number: '0010',
+    date: '04-11-2026',
+    sprint: 'G&S 5',
+    change: 'Pi-simulator live gezet, met pro-modus en 51 testbestanden',
+    evidence: { label: 'D-11', href: '/projecten/pi-simulator' },
+  },
+  {
+    number: '0011',
+    date: '04-11-2026',
+    sprint: 'G&S 5',
+    change: 'Vacatureanalyse afgerond: 13 van 75 vacatures voor controllers noemen AI',
+    evidence: { label: 'D-12', href: '/projecten/onderzoek-vragen-werkgevers-om-ai' },
+  },
+  {
+    number: '0012',
+    date: '04-11-2026',
+    sprint: 'G&S 5',
+    change: 'Cover toegevoegd aan elk dossier',
+    evidence: { label: 'site', href: '/projecten' },
+  },
 ]
 
 export const nextEntryNote =
-  'Volgende regel na de grow & show van 01-10-2026, daarna elke twee weken op donderdag'
+  'Volgende regel na de grow & show van 12-11-2026, daarna elke twee weken op donderdag'
