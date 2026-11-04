@@ -14,5 +14,13 @@ export const stampOverrides: Record<string, DossierStamp> = {
     detail: 'SUPERUNIE',
     tilt: -4,
   },
+  'pet-your-dog': { label: 'FASE', value: '3 VAN 5', detail: 'LIVE', tilt: 4 },
+  'pi-simulator': { label: 'TESTS', value: '51 TESTBESTANDEN', detail: 'LIVE', tilt: -3 },
+  'onderzoek-vragen-werkgevers-om-ai': {
+    label: 'UITKOMST',
+    value: '13 VAN 75 NOEMEN AI',
+    detail: '17%',
+    tilt: -4,
+  },
   'digitaal-dagboek': { label: 'MIJLPAAL', value: 'EERSTE WEBAPP', detail: 'LIVE', tilt: 3 },
 }
