@@ -22,5 +22,11 @@ export const stampOverrides: Record<string, DossierStamp> = {
     detail: '17%',
     tilt: -4,
   },
+  'onderzoek-ai-factuurinjectie': {
+    label: 'UITKOMST',
+    value: '0 VAN 27 MISLEID',
+    detail: '12 VAN 27 OPGEMERKT',
+    tilt: 3,
+  },
   'digitaal-dagboek': { label: 'MIJLPAAL', value: 'EERSTE WEBAPP', detail: 'LIVE', tilt: 3 },
 }

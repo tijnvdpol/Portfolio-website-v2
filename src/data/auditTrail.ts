@@ -96,6 +96,13 @@ export const auditTrail: AuditEntry[] = [
     change: 'Cover toegevoegd aan elk dossier',
     evidence: { label: 'site', href: '/projecten' },
   },
+  {
+    number: '0013',
+    date: '12-11-2026',
+    sprint: 'G&S 5',
+    change: 'Onderzoek AI-factuurinjectie afgerond: 0 van 27 keer misleid, 12 van 27 keer opgemerkt',
+    evidence: { label: 'D-13', href: '/projecten/onderzoek-ai-factuurinjectie' },
+  },
 ]
 
 export const nextEntryNote =
