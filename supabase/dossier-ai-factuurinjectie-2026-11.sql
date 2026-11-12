@@ -1,4 +1,4 @@
--- Voegt dossier D-13 toe op /projecten: onderzoek naar AI-factuurinjectie (verborgen tekst in
+-- Voegt dossier toe op /projecten: onderzoek naar AI-factuurinjectie (verborgen tekst in
 -- facturen, 36 testruns). Eenmalig uitvoeren in de Supabase SQL Editor, NA projecten-2026-09.sql.
 -- Veilig om twee keer te draaien. Niet uitgelicht. De bestanden staan in public/ (presentaties/,
 -- bewijs/ai-factuurinjectie/, covers/): deploy de site eerst, anders verwijzen de links nergens naartoe.
