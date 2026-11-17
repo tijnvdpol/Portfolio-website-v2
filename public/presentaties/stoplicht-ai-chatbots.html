@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mag dit in de chatbot?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
+<style>
+/* Werkinstructie-kaart: een stoplicht dat naast het scherm van een controller hangt.
+   Layout: titel over de volle breedte, daaronder links het bord met 18 gegevenssoorten, rechts het signaal (sticky).
+   Daarna rustige secties in één leeskolom met brede tabellen waar nodig. */
+:root{
+  --asfalt:#1a1c1e;      /* inkt + behuizing stoplicht */
+  --papier:#eceee9;      /* pagina, koel grijsgroen */
+  --kaart:#fbfbf9;       /* vlakken */
+  --lijn:#cdd1c9;
+  --grijs:#555a60;
+  --groen:#12804a;
+  --oranje:#e58a0b;
+  --oranje-tekst:#8f5200;
+  --rood:#c8362b;
+  --blauw:#1d4ed8;       /* links, zelfde inkt als de stempel op de portfolio */
+  --lamp-uit:#2b2d2f;
+  --display:"Archivo", "Arial Narrow", system-ui, sans-serif;
+  --body:"Archivo", system-ui, "Segoe UI", sans-serif;
+  color-scheme: light;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--papier);color:var(--asfalt);font-family:var(--body);font-size:17px;line-height:1.55;font-variation-settings:"wdth" 100}
+a{color:var(--blauw);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--blauw);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.col{max-width:760px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.02}
+h1{font-size:clamp(46px,8.4vw,112px);font-weight:860;font-variation-settings:"wdth" 72;letter-spacing:-.02em}
+h2{font-size:clamp(30px,4.2vw,48px);font-weight:820;font-variation-settings:"wdth" 78;letter-spacing:-.01em}
+h3{font-size:21px;font-weight:760;font-variation-settings:"wdth" 88;line-height:1.2}
+p{margin:0}
+.small{font-size:14px;line-height:1.5;color:var(--grijs)}
+.cite{font-size:13.5px;font-variation-settings:"wdth" 86;font-weight:520;color:var(--grijs)}
+
+/* ---------- kop ---------- */
+header.top{padding:40px 0 0}
+.meta{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:14px;color:var(--grijs);font-variation-settings:"wdth" 86;margin-bottom:26px}
+.meta strong{color:var(--asfalt);font-weight:650}
+.lead{font-size:20px;line-height:1.45;max-width:640px;margin-top:22px}
+.kern{margin-top:18px;font-size:20px;font-weight:700;font-variation-settings:"wdth" 90;display:flex;flex-wrap:wrap;gap:4px 14px}
+.kern span{display:inline-flex;align-items:center;gap:8px}
+.kern i{width:12px;height:12px;border-radius:50%;display:inline-block}
+
+/* ---------- account-schakelaar ---------- */
+.schakel{margin-top:30px;display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px}
+.schakel-label{font-weight:650;font-variation-settings:"wdth" 90}
+.seg{display:inline-flex;background:var(--kaart);border:1.5px solid var(--asfalt);border-radius:999px;padding:4px}
+.seg button{font:inherit;font-size:15.5px;font-weight:600;border:0;background:transparent;color:var(--asfalt);padding:9px 18px;border-radius:999px;cursor:pointer}
+.seg button[aria-checked="true"]{background:var(--asfalt);color:#fff}
+.schakel .small{flex-basis:100%}
+
+/* ---------- stoplicht + bord ---------- */
+.tool{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:40px;align-items:start;margin-top:34px;padding-bottom:72px}
+.bord{display:grid;gap:16px}
+.band{background:var(--kaart);border:1px solid var(--lijn);border-radius:14px;padding:18px 18px 18px 20px;border-left:8px solid var(--c)}
+.band[data-k="groen"]{--c:var(--groen)}
+.band[data-k="oranje"]{--c:var(--oranje)}
+.band[data-k="rood"]{--c:var(--rood)}
+.band-kop{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 12px;margin-bottom:12px}
+.band-kop h3{font-size:24px;font-variation-settings:"wdth" 75;font-weight:840}
+.band-regel{font-weight:600;font-variation-settings:"wdth" 92}
+.band[data-k="oranje"] .band-regel{color:var(--oranje-tekst)}
+.band[data-k="rood"] .band-regel{color:var(--rood)}
+.band[data-k="groen"] .band-regel{color:var(--groen)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;font-size:15px;line-height:1.3;text-align:left;font-weight:520;background:#fff;color:var(--asfalt);border:1.5px solid var(--lijn);border-radius:8px;padding:8px 12px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:border-color .12s,background .12s}
+.chip:hover{border-color:var(--c)}
+.chip[aria-pressed="true"]{background:var(--c);border-color:var(--c);color:#fff}
+.band[data-k="oranje"] .chip[aria-pressed="true"]{color:var(--asfalt)}
+.chip .vink{display:none;width:14px;height:14px;flex:none}
+body.zakelijk .band[data-k="oranje"] .chip:not([data-alleenzak="nee"]) .vink{display:inline-block}
+
+.signaal-kolom{position:sticky;top:20px;display:grid;gap:14px}
+.paal{background:var(--asfalt);color:#fff;border-radius:26px;padding:22px;display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center;box-shadow:0 14px 30px -18px rgba(26,28,30,.55)}
+.lampen{display:grid;gap:12px;background:#111314;padding:12px;border-radius:999px}
+.lamp{width:62px;height:62px;border-radius:50%;background:var(--lamp-uit);box-shadow:inset 0 -6px 10px rgba(0,0,0,.45);transition:background .22s,box-shadow .22s}
+.lamp.aan[data-l="rood"]{background:#ff5240;box-shadow:0 0 26px 4px rgba(255,82,64,.55),inset 0 -6px 10px rgba(0,0,0,.2)}
+.lamp.aan[data-l="oranje"]{background:#ffa526;box-shadow:0 0 26px 4px rgba(255,165,38,.5),inset 0 -6px 10px rgba(0,0,0,.2)}
+.lamp.aan[data-l="groen"]{background:#2bd47a;box-shadow:0 0 26px 4px rgba(43,212,122,.45),inset 0 -6px 10px rgba(0,0,0,.2)}
+.oordeel-item{font-size:14px;color:#c9ccc6;font-variation-settings:"wdth" 88;margin-bottom:6px}
+.oordeel{font-family:var(--display);font-size:38px;line-height:1;font-weight:860;font-variation-settings:"wdth" 72;letter-spacing:-.01em}
+.oordeel-sub{margin-top:10px;font-size:15px;line-height:1.4;color:#e7e9e4}
+.detail{background:var(--kaart);border:1px solid var(--lijn);border-radius:14px;padding:18px 20px;display:grid;gap:14px}
+.detail dt{font-size:13.5px;font-weight:650;color:var(--grijs);font-variation-settings:"wdth" 88}
+.detail dd{margin:2px 0 0}
+.detail dl{margin:0;display:grid;gap:12px}
+.acc{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.acc > div{border:1.5px solid var(--lijn);border-radius:10px;padding:10px 12px;font-size:15px;line-height:1.4}
+.acc > div.actief{border-color:var(--asfalt);background:#fff}
+.acc b{display:block;font-size:13px;font-variation-settings:"wdth" 88;color:var(--grijs);margin-bottom:3px}
+.acc > div.actief b{color:var(--asfalt)}
+
+/* ---------- secties ---------- */
+section{padding:72px 0;border-top:1.5px solid var(--asfalt)}
+section > .wrap > h2{margin-bottom:18px}
+.intro{font-size:18.5px;max-width:680px}
+
+.waarom{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:start;margin-top:30px}
+blockquote{margin:0;font-family:var(--display);font-size:clamp(28px,3.4vw,40px);line-height:1.12;font-weight:780;font-variation-settings:"wdth" 80}
+blockquote footer{font-family:var(--body);font-size:14.5px;font-weight:500;color:var(--grijs);margin-top:14px;font-variation-settings:"wdth" 92;line-height:1.45}
+.feiten{display:grid;gap:18px}
+.feit{border-top:1px solid var(--lijn);padding-top:14px}
+.feit h3{margin-bottom:6px}
+
+.tabel-scroll{overflow-x:auto;margin-top:28px;border:1px solid var(--lijn);border-radius:14px;background:var(--kaart)}
+table{border-collapse:collapse;width:100%;min-width:900px;font-size:14.5px;line-height:1.4}
+th,td{padding:12px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--lijn)}
+thead th{font-family:var(--display);font-variation-settings:"wdth" 82;background:#fff}
+thead tr:first-child th{font-size:19px;font-weight:820;border-bottom:0;padding-bottom:2px}
+thead tr:last-child th{font-size:13.5px;font-weight:600;color:var(--grijs);font-variation-settings:"wdth" 88}
+tbody th{font-weight:680;font-variation-settings:"wdth" 88;width:150px;background:#fff}
+td.zak{background:#f3f5f1}
+tbody tr:last-child th,tbody tr:last-child td{border-bottom:0}
+.groep{border-left:1.5px solid var(--asfalt)}
+.stip{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:7px;vertical-align:1px}
+.s-g{background:var(--groen)}.s-o{background:var(--oranje)}.s-r{background:var(--rood)}
+.legenda{display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:12px}
+
+.tijdlijn{list-style:none;padding:0;margin:34px 0 0;display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative}
+.tijdlijn::before{content:"";position:absolute;left:0;right:0;top:9px;height:2px;background:var(--asfalt)}
+.tijdlijn li{position:relative;padding:30px 18px 0 0}
+.tijdlijn li::before{content:"";position:absolute;top:2px;left:0;width:16px;height:16px;border-radius:50%;background:var(--papier);border:2.5px solid var(--asfalt)}
+.tijdlijn li.toekomst::before{border-style:dashed}
+.tijdlijn time{display:block;font-family:var(--display);font-weight:800;font-size:19px;font-variation-settings:"wdth" 80;margin-bottom:4px}
+.tijdlijn p{font-size:15px;line-height:1.45}
+.nu{position:absolute;top:-6px;height:30px;width:2px;background:var(--rood)}
+.nu span{position:absolute;bottom:34px;left:-30px;white-space:nowrap;font-size:13px;font-weight:700;color:var(--rood);font-variation-settings:"wdth" 86}
+.nb{margin-top:30px;max-width:680px;padding:16px 18px;background:var(--kaart);border-radius:12px;border:1px solid var(--lijn)}
+
+.quiz{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}
+.vraag{background:var(--kaart);border:1px solid var(--lijn);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.vraag h3{font-size:19px}
+.knoppen{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
+.knoppen button{font:inherit;font-size:15px;font-weight:650;padding:8px 14px;border-radius:999px;border:1.5px solid var(--c);background:#fff;color:var(--asfalt);cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+.knoppen button i{width:10px;height:10px;border-radius:50%;background:var(--c)}
+.knoppen button[data-k="groen"]{--c:var(--groen)}
+.knoppen button[data-k="oranje"]{--c:var(--oranje)}
+.knoppen button[data-k="rood"]{--c:var(--rood)}
+.knoppen button.gekozen{background:var(--c);color:#fff}
+.knoppen button.gekozen[data-k="oranje"]{color:var(--asfalt)}
+.knoppen button.gekozen i{background:#fff}
+.antwoord{font-size:15px;line-height:1.45;border-top:1px solid var(--lijn);padding-top:12px}
+.antwoord[hidden]{display:none}
+.antwoord strong{display:block;margin-bottom:3px}
+
+.advies{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:30px}
+.advies article{background:var(--kaart);border:1px solid var(--lijn);border-radius:14px;padding:22px;display:grid;gap:10px;align-content:start}
+.advies .thema{font-size:14px;font-weight:700;font-variation-settings:"wdth" 86;color:var(--grijs)}
+.advies ol{margin:4px 0 0;padding-left:22px;display:grid;gap:6px}
+.advies ul{margin:4px 0 0;padding-left:20px;display:grid;gap:6px}
+.regel{background:#fff;border:1.5px dashed var(--asfalt);border-radius:10px;padding:12px 14px;font-size:15px}
+.kopieer{font:inherit;font-size:14.5px;font-weight:650;justify-self:start;padding:8px 14px;border-radius:999px;border:1.5px solid var(--asfalt);background:var(--asfalt);color:#fff;cursor:pointer}
+
+.twijfel{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:30px}
+.twijfel article{border-top:4px solid var(--asfalt);padding-top:16px;display:grid;gap:10px;align-content:start}
+.twijfel .label{display:flex;gap:16px;flex-wrap:wrap;font-size:14px;font-weight:650;font-variation-settings:"wdth" 88}
+.twijfel .label span{display:inline-flex;align-items:center;gap:6px}
+
+.grenzen{margin-top:24px;display:grid;gap:12px;padding-left:20px;max-width:760px}
+
+.bronnen{margin-top:24px;display:grid;grid-template-columns:repeat(2,1fr);gap:10px 40px;font-size:14px;line-height:1.5;list-style:none;padding:0}
+.bronnen li{padding-left:22px;text-indent:-22px;overflow-wrap:anywhere}
+footer.voet{border-top:1.5px solid var(--asfalt);padding:28px 0 48px;font-size:14px;color:var(--grijs)}
+footer.voet .wrap{display:flex;flex-wrap:wrap;gap:8px 30px;justify-content:space-between}
+
+/* ---------- responsive ---------- */
+@media (max-width: 980px){
+  .tool{grid-template-columns:1fr}
+  .signaal-kolom{position:static}
+  .quiz{grid-template-columns:1fr}
+  .waarom{grid-template-columns:1fr}
+  .tijdlijn{grid-template-columns:1fr;gap:18px}
+  .tijdlijn::before{left:7px;right:auto;top:0;bottom:0;width:2px;height:auto}
+  .tijdlijn li{padding:0 0 0 34px}
+  .nu{display:none}
+}
+@media (max-width: 720px){
+  .wrap{padding:0 18px}
+  .advies,.twijfel,.bronnen{grid-template-columns:1fr}
+  .paal{grid-template-columns:auto 1fr;padding:16px;gap:16px}
+  .lamp{width:46px;height:46px}
+  .oordeel{font-size:30px}
+  .acc{grid-template-columns:1fr}
+  section{padding:56px 0}
+  .seg button{padding:9px 13px;font-size:14.5px}
+}
+@media (prefers-reduced-motion: reduce){
+  *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="meta">
+      <span><strong>Onderzoek</strong> voor de minor Futureproof met AI</span>
+      <span>Tijn van der Pol, Finance &amp; Control</span>
+      <span>Peildatum 17 november 2026</span>
+    </div>
+    <h1>Mag dit in de chatbot?</h1>
+    <p class="lead">Een stoplicht voor controllers die ChatGPT, Claude of Copilot gebruiken. Kies een gegevenssoort en je ziet meteen of je hem mag invoeren, en waarom.</p>
+    <p class="kern">
+      <span><i style="background:var(--groen)"></i>Openbaar of fictief: mag.</span>
+      <span><i style="background:var(--oranje)"></i>Vertrouwelijk: alleen zakelijk of geanonimiseerd.</span>
+      <span><i style="background:var(--rood)"></i>Herleidbaar of koersgevoelig: nooit.</span>
+    </p>
+
+    <div class="schakel">
+      <span class="schakel-label" id="schakel-label">Ik werk met een</span>
+      <div class="seg" role="radiogroup" aria-labelledby="schakel-label">
+        <button type="button" role="radio" id="acc-prive" aria-checked="true" data-acc="prive">Privéaccount</button>
+        <button type="button" role="radio" id="acc-zak" aria-checked="false" data-acc="zakelijk">Zakelijk account van mijn werkgever</button>
+      </div>
+      <p class="small">Een betaald Plus-, Pro- of Max-abonnement op je eigen naam telt als privé. Zakelijk is ChatGPT Business/Enterprise, Claude Team/Enterprise of Microsoft 365 Copilot met je werkaccount.</p>
+    </div>
+
+    <div class="tool">
+      <div class="bord" id="bord" aria-label="Gegevenssoorten per kleur"></div>
+
+      <aside class="signaal-kolom" id="signaal" aria-live="polite">
+        <div class="paal">
+          <div class="lampen" aria-hidden="true">
+            <div class="lamp" data-l="rood"></div>
+            <div class="lamp" data-l="oranje"></div>
+            <div class="lamp" data-l="groen"></div>
+          </div>
+          <div>
+            <p class="oordeel-item" id="o-item"></p>
+            <p class="oordeel" id="o-titel"></p>
+            <p class="oordeel-sub" id="o-sub"></p>
+          </div>
+        </div>
+        <div class="detail">
+          <dl>
+            <div><dt>Waarom</dt><dd id="d-waarom"></dd></div>
+            <div><dt>Wettelijke basis</dt><dd id="d-wet"></dd></div>
+          </dl>
+          <div class="acc">
+            <div id="d-prive"><b>Privéaccount</b><span></span></div>
+            <div id="d-zak"><b>Zakelijk account</b><span></span></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</header>
+
+<main>
+<section aria-labelledby="h-waarom">
+  <div class="wrap">
+    <h2 id="h-waarom">Eén keer plakken is al een datalek</h2>
+    <div class="waarom">
+      <blockquote>
+        “Als daarbij persoonsgegevens zijn ingevoerd, dan is sprake van een datalek.”
+        <footer>Autoriteit Persoonsgegevens (2024), over medewerkers die tegen de afspraken in gegevens in een AI-chatbot zetten. Voorbeelden: patiëntgegevens bij een huisartsenpraktijk en een klantenbestand bij een telecombedrijf.</footer>
+      </blockquote>
+      <div class="feiten">
+        <div class="feit">
+          <h3>Tientallen meldingen per jaar</h3>
+          <p>De AP kreeg in 2024 en 2025 tientallen meldingen van zulke datalekken, in 2025 meer dan in 2024. Het ging vooral om gratis versies (FD, 2025, via ICT Magazine).</p>
+        </div>
+        <div class="feit">
+          <h3>Zakelijk is niet automatisch veilig</h3>
+          <p>In juli 2026 oordeelde de AP dat de inzet van Microsoft 365 Copilot zoals gemeente Haarlemmermeer die beschreef inbreuk zou maken op de AVG. Ook met een zakelijk account heb je doelbinding, toegangsrechten, een DPIA en menselijke controle nodig.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="h-account">
+  <div class="wrap">
+    <h2 id="h-account">Privé of zakelijk: wat verandert er?</h2>
+    <p class="intro">Bij een privéaccount gebruikt de aanbieder je invoer voor eigen doelen. Bij een zakelijk account is hij verwerker in opdracht van je werkgever, met een verwerkersovereenkomst (art. 28 AVG). Dat verschil bepaalt of oranje gegevens erin mogen.</p>
+    <div class="tabel-scroll" tabindex="0" role="region" aria-label="Vergelijking privé en zakelijk per chatbot">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="colgroup" colspan="2" class="groep">ChatGPT</th>
+            <th scope="colgroup" colspan="2" class="groep">Claude</th>
+            <th scope="colgroup" colspan="2" class="groep">Copilot</th>
+          </tr>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col" class="groep">Privé: Free, Plus, Pro</th>
+            <th scope="col">Zakelijk: Business, Enterprise, API</th>
+            <th scope="col" class="groep">Privé: Free, Pro, Max</th>
+            <th scope="col">Zakelijk: Team, Enterprise, API</th>
+            <th scope="col" class="groep">Privé: persoonlijk Microsoft-account</th>
+            <th scope="col">Zakelijk: Microsoft 365 met werkaccount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Training op je invoer</th>
+            <td class="groep"><span class="stip s-r"></span>Standaard aan. Uit te zetten, maar duim omhoog of omlaag kan alsnog meetellen.</td>
+            <td class="zak"><span class="stip s-g"></span>Standaard niet</td>
+            <td class="groep"><span class="stip s-o"></span>Eigen keuze sinds 8 oktober 2025. Gemarkeerde gesprekken kunnen ook bij opt-out gebruikt worden.</td>
+            <td class="zak"><span class="stip s-g"></span>Standaard niet</td>
+            <td class="groep"><span class="stip s-o"></span>Oude app: standaard aan. Nieuwe app (augustus 2026): volgens Microsoft niet, nog niet officieel bevestigd.</td>
+            <td class="zak"><span class="stip s-g"></span>Niet voor het trainen van de taalmodellen</td>
+          </tr>
+          <tr>
+            <th scope="row">Bewaartermijn</th>
+            <td class="groep"><span class="stip s-o"></span>Verwijderde chats binnen 30 dagen weg</td>
+            <td class="zak"><span class="stip s-g"></span>Beheerder bepaalt; API ook zonder opslag</td>
+            <td class="groep"><span class="stip s-r"></span>30 dagen, of tot 5 jaar als training aan staat</td>
+            <td class="zak"><span class="stip s-g"></span>Binnen 30 dagen na verwijderen</td>
+            <td class="groep"><span class="stip s-r"></span>18 maanden (oude app)</td>
+            <td class="zak"><span class="stip s-g"></span>Volgens het beleid van je organisatie</td>
+          </tr>
+          <tr>
+            <th scope="row">Verwerkers&shy;overeenkomst</th>
+            <td class="groep"><span class="stip s-r"></span>Nee</td>
+            <td class="zak"><span class="stip s-g"></span>Ja</td>
+            <td class="groep"><span class="stip s-r"></span>Nee</td>
+            <td class="zak"><span class="stip s-g"></span>Ja, onderdeel van de voorwaarden</td>
+            <td class="groep"><span class="stip s-r"></span>Nee</td>
+            <td class="zak"><span class="stip s-g"></span>Ja</td>
+          </tr>
+          <tr>
+            <th scope="row">Opslag in de EU</th>
+            <td class="groep"><span class="stip s-r"></span>Nee, VS en wereldwijd</td>
+            <td class="zak"><span class="stip s-o"></span>Mogelijk bij Enterprise en API; bij Business in uitrol</td>
+            <td class="groep"><span class="stip s-r"></span>Nee</td>
+            <td class="zak"><span class="stip s-o"></span>Niet gedocumenteerd, vooral VS</td>
+            <td class="groep"><span class="stip s-r"></span>Nee</td>
+            <td class="zak"><span class="stip s-o"></span>EU Data Boundary, maar Claude-modellen en Bing-zoeken vallen erbuiten</td>
+          </tr>
+          <tr>
+            <th scope="row">Geschikt voor oranje gegevens</th>
+            <td class="groep"><span class="stip s-r"></span>Nee</td>
+            <td class="zak"><span class="stip s-g"></span>Ja, als IT het heeft goedgekeurd</td>
+            <td class="groep"><span class="stip s-r"></span>Nee</td>
+            <td class="zak"><span class="stip s-g"></span>Ja, als IT het heeft goedgekeurd</td>
+            <td class="groep"><span class="stip s-r"></span>Nee</td>
+            <td class="zak"><span class="stip s-g"></span>Ja, als IT het heeft goedgekeurd</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="legenda small">
+      <span><span class="stip s-g"></span>gunstig voor vertrouwelijke gegevens</span>
+      <span><span class="stip s-o"></span>hangt af van instellingen of versie</span>
+      <span><span class="stip s-r"></span>ongunstig</span>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="h-act">
+  <div class="wrap">
+    <h2 id="h-act">Wat de AI Act wanneer van je vraagt</h2>
+    <p class="intro">De chatbot zelf is voor een controller geen hoog-risicosysteem. Het risico zit in waarvoor je hem gebruikt. Stand na de Digital Omnibus (Verordening (EU) 2026/1744).</p>
+    <ol class="tijdlijn">
+      <li>
+        <time datetime="2025-02-02">2 feb 2025</time>
+        <p>Art. 4: elke organisatie die AI gebruikt, moet werken aan AI-geletterdheid van haar mensen.</p>
+      </li>
+      <li>
+        <time datetime="2025-08-02">2 aug 2025</time>
+        <p>Regels voor aanbieders van grote AI-modellen, zoals OpenAI, Anthropic en Microsoft. Niet voor jou als gebruiker.</p>
+      </li>
+      <li>
+        <time datetime="2026-07-27">27 jul 2026</time>
+        <p>Digital Omnibus: art. 4 wordt lichter (maatregelen nemen in plaats van een niveau waarborgen) en hoog-risico schuift op.</p>
+      </li>
+      <li>
+        <time datetime="2026-08-02">2 aug 2026</time>
+        <p>Art. 50: transparantieplichten gelden. Bestaande systemen hebben tot 2 december 2026 om AI-content te markeren.</p>
+        <div class="nu" style="left:58%" aria-hidden="true"><span>17 nov 2026</span></div>
+      </li>
+      <li class="toekomst">
+        <time datetime="2027-12-02">2 dec 2027</time>
+        <p>Hoog-risico (bijlage III): AI bij werving, promotie of ontslag en bij kredietwaardigheid van particulieren. Dan gelden ook de plichten uit art. 26.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section aria-labelledby="h-test">
+  <div class="wrap">
+    <h2 id="h-test">Test jezelf</h2>
+    <p class="intro">Drie gevallen uit de praktijk. Welke kleur krijgen ze?</p>
+    <div class="quiz" id="quiz"></div>
+  </div>
+</section>
+
+<section aria-labelledby="h-advies">
+  <div class="wrap">
+    <h2 id="h-advies">Zo gebruik je AI verantwoord</h2>
+    <div class="advies">
+      <article>
+        <p class="thema">Privacy</p>
+        <h3>Anonimiseer voordat je plakt</h3>
+        <ol>
+          <li>Kan het zonder echte data? Gebruik dan fictieve cijfers.</li>
+          <li>Haal namen, BSN's, IBAN's en personeelsnummers weg. Rond bedragen af of zet ze op index 100. Vervang namen door codes en houd de sleutel buiten de chatbot.</li>
+          <li>Controleer of het nog herleidbaar is, bijvoorbeeld bij een team van minder dan vijf mensen. Zo ja, dan blijft het oranje of wordt het rood.</li>
+        </ol>
+        <p class="small">Toch iets verkeerds ingevoerd? Meld het direct bij de privacy officer. Je werkgever heeft 72 uur om het datalek bij de AP te melden (art. 33 AVG).</p>
+      </article>
+      <article>
+        <p class="thema">Bias en betrouwbaarheid</p>
+        <h3>Controleer de uitkomst tegen de bron</h3>
+        <ul>
+          <li>Leg elk getal, elke IFRS- of RJ-verwijzing en elke berekening naast het grootboek, de jaarrekening of de standaard.</li>
+          <li>Laat AI nooit alleen beslissen over mensen: beoordeling, ontslag of krediet aan particulieren. Dat is hoog-risico onder de AI Act en volledig geautomatiseerd verboden onder art. 22 AVG.</li>
+          <li>Vraag naar de aannames en kijk of groepen zoals deeltijders of een locatie systematisch anders uitkomen.</li>
+        </ul>
+      </article>
+      <article>
+        <p class="thema">Transparantie</p>
+        <h3>Zeg wanneer je AI hebt gebruikt</h3>
+        <p>Zet een vaste regel onder rapportages en memo's:</p>
+        <p class="regel" id="ai-regel">Bij het opstellen is [tool, zakelijk account] gebruikt voor [doel]. De cijfers zijn gecontroleerd door [naam].</p>
+        <button type="button" class="kopieer" id="kopieer">Kopieer regel</button>
+        <p class="small">Informeer medewerkers vooraf als hun gegevens met AI worden geanalyseerd (art. 13 en 14 AVG) en zet het gebruik in het verwerkingsregister.</p>
+      </article>
+      <article>
+        <p class="thema">AI-geletterdheid</p>
+        <h3>Ken je tool en je huisregels</h3>
+        <ul>
+          <li>Volg de interne training en leg vast welke tools je gebruikt (art. 4 AI Act).</li>
+          <li>Gebruik dit stoplicht als werkinstructie. Is het beleid van je werkgever strenger, bijvoorbeeld geen enkele externe AI, dan gaat dat voor.</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="h-twijfel">
+  <div class="wrap">
+    <h2 id="h-twijfel">Mag wel, maar is het goed?</h2>
+    <p class="intro">Twee gevallen die juridisch te verdedigen zijn en ethisch toch wringen.</p>
+    <div class="twijfel">
+      <article>
+        <p class="label"><span><span class="stip s-g"></span>Juridisch: lijkt in orde</span><span><span class="stip s-r"></span>Ethisch: twijfelachtig</span></p>
+        <h3>Het geanonimiseerde ontslagmodel</h3>
+        <p>Een controller zet gepseudonimiseerde salaris-, verzuim- en productiviteitsdata in een zakelijk account om inefficiënte functies te vinden. Er is een verwerkersovereenkomst, er staan geen namen in en er is nog geen geautomatiseerd besluit.</p>
+        <p>Toch kan het model oude bias overnemen tegen deeltijders of mensen met verzuim door zwangerschap of chronische ziekte. Werknemers weten niet dat hun data zo wordt gebruikt, en in kleine teams is de uitkomst gewoon herleidbaar. Vanaf december 2027 is dit hoog-risico; het uitstel maakt het nu niet ethischer.</p>
+      </article>
+      <article>
+        <p class="label"><span><span class="stip s-o"></span>Juridisch: dun verdedigbaar</span><span><span class="stip s-r"></span>Ethisch: twijfelachtig</span></p>
+        <h3>Even snel via je eigen Plus-account</h3>
+        <p>Een medewerker gebruikt privé ChatGPT Plus met training uitgezet, voor budgetten zonder namen. Omdat er geen persoonsgegevens in zitten, is het juridisch misschien te verdedigen.</p>
+        <p>Maar het omzeilt de IT-afspraken (shadow AI), en een feedbackknop of een veiligheidscontrole kan de opt-out alsnog doorbreken. Wie zo werkt, maakt de keuze voor de hele organisatie.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="h-grenzen">
+  <div class="wrap">
+    <h2 id="h-grenzen">Grenzen van dit onderzoek</h2>
+    <ul class="grenzen">
+      <li>Ik ben student Finance &amp; Control en geen jurist. Dit is geen juridisch advies.</li>
+      <li>Voorwaarden veranderen vaak. Anthropic paste zijn beleid in 2025 en 2026 meerdere keren aan en Microsoft bracht in augustus 2026 een nieuwe Copilot-app uit. Alles hier geldt per 17 november 2026.</li>
+      <li>Een paar details over aanbieders, zoals EU-opslag bij Claude en het trainingsbeleid van de nieuwe Copilot-app, komen deels uit secundaire bronnen en zijn niet volledig op officiële pagina's bevestigd.</li>
+      <li>Het stoplicht gaat over het invoeren van gegevens. Het zegt niets over de juistheid van de uitkomst of over auteursrecht op gegenereerde tekst.</li>
+      <li>Het beleid van je werkgever kan strenger zijn. Dan gaat dat voor.</li>
+    </ul>
+  </div>
+</section>
+
+<section aria-labelledby="h-bronnen">
+  <div class="wrap">
+    <h2 id="h-bronnen">Bronnen</h2>
+    <p class="small">APA 7. Websites geraadpleegd op 17 november 2026.</p>
+    <ul class="bronnen">
+      <li>Anthropic. (2025, 28 augustus). <i>Updates to consumer terms and privacy policy</i>. <a href="https://www.anthropic.com/news/updates-to-our-consumer-terms">https://www.anthropic.com/news/updates-to-our-consumer-terms</a></li>
+      <li>Anthropic. (z.d.-a). <i>Covered models</i>. Claude Help Center. <a href="https://support.claude.com/en/articles/15425695-covered-models">https://support.claude.com/en/articles/15425695-covered-models</a></li>
+      <li>Anthropic. (z.d.-b). <i>Is my data used for model training?</i> Privacy Center. <a href="https://privacy.claude.com/en/articles/10023580-is-my-data-used-for-model-training">https://privacy.claude.com/en/articles/10023580-is-my-data-used-for-model-training</a></li>
+      <li>Anthropic. (z.d.-c). <i>Updates to our privacy policy</i>. Privacy Center. <a href="https://privacy.anthropic.com/en/articles/10301952-updates-to-our-privacy-policy">https://privacy.anthropic.com/en/articles/10301952-updates-to-our-privacy-policy</a></li>
+      <li>Autoriteit Persoonsgegevens. (2024, 6 augustus). <i>Let op: gebruik AI-chatbot kan leiden tot datalekken</i>. <a href="https://www.autoriteitpersoonsgegevens.nl">https://www.autoriteitpersoonsgegevens.nl</a></li>
+      <li>Autoriteit Persoonsgegevens. (2026a, maart). <i>Rapportage AI- &amp; Algoritmerisico's Nederland</i> (editie 6). <a href="https://www.autoriteitpersoonsgegevens.nl">https://www.autoriteitpersoonsgegevens.nl</a></li>
+      <li>Autoriteit Persoonsgegevens. (2026b, 13 juli). <i>Advies voorafgaande raadpleging Microsoft 365 Copilot, gemeente Haarlemmermeer</i> (zaak 2025-018225). <a href="https://www.autoriteitpersoonsgegevens.nl">https://www.autoriteitpersoonsgegevens.nl</a></li>
+      <li>Autoriteit Persoonsgegevens. (2026c, 13 juli). <i>Hulpmiddel generatieve AI en de AVG</i>. <a href="https://www.autoriteitpersoonsgegevens.nl/documenten/hulpmiddel-generatieve-ai-en-de-avg-vr">https://www.autoriteitpersoonsgegevens.nl/documenten/hulpmiddel-generatieve-ai-en-de-avg-vr</a></li>
+      <li>European Data Protection Board. (2024, 23 mei). <i>Report of the work undertaken by the ChatGPT Taskforce</i>. <a href="https://www.edpb.europa.eu">https://www.edpb.europa.eu</a></li>
+      <li>Het Financieele Dagblad. (2025, 29 december). [Artikel over meldingen van datalekken via AI-chatbots bij de AP]. Aangehaald in ICT Magazine.</li>
+      <li>Microsoft. (2026a). <i>Data, privacy, and security for Microsoft 365 Copilot</i>. Microsoft Learn. <a href="https://learn.microsoft.com/en-us/microsoft-365/copilot/microsoft-365-copilot-privacy">https://learn.microsoft.com/en-us/microsoft-365/copilot/microsoft-365-copilot-privacy</a></li>
+      <li>Microsoft. (2026b, 3 november). <i>Privacy FAQ for Microsoft Copilot</i>. <a href="https://support.microsoft.com/en-us/microsoft-copilot/privacy-faq-for-microsoft-copilot">https://support.microsoft.com/en-us/microsoft-copilot/privacy-faq-for-microsoft-copilot</a></li>
+      <li>Ministerie van Binnenlandse Zaken en Koninkrijksrelaties. (2025, 22 april). <i>Overheidsbreed standpunt voor de inzet van generatieve AI</i>. Rijksoverheid.</li>
+      <li>OpenAI. (2025). <i>How we're responding to The New York Times' data demands</i>. <a href="https://openai.com/index/response-to-nyt-data-demands/">https://openai.com/index/response-to-nyt-data-demands/</a></li>
+      <li>OpenAI. (z.d.-a). <i>How OpenAI handles data in consumer services</i>. <a href="https://help.openai.com/en/articles/7039943-how-openai-handles-data-in-consumer-services">https://help.openai.com/en/articles/7039943-how-openai-handles-data-in-consumer-services</a></li>
+      <li>OpenAI. (z.d.-b). <i>How your data is used to improve model performance</i>. <a href="https://help.openai.com/en/articles/5722486-how-your-data-is-used-to-improve-model-performance">https://help.openai.com/en/articles/5722486-how-your-data-is-used-to-improve-model-performance</a></li>
+      <li>Uitvoeringswet Algemene verordening gegevensbescherming. (2018). <a href="https://wetten.overheid.nl/BWBR0040940">https://wetten.overheid.nl/BWBR0040940</a></li>
+      <li>Verordening (EU) 2016/679. (2016). <i>Algemene verordening gegevensbescherming</i>. Publicatieblad van de Europese Unie, L 119. <a href="https://eur-lex.europa.eu/eli/reg/2016/679/oj">https://eur-lex.europa.eu/eli/reg/2016/679/oj</a></li>
+      <li>Verordening (EU) 2024/1689. (2024). <i>Verordening artificiële intelligentie</i>. Publicatieblad van de Europese Unie. <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj">https://eur-lex.europa.eu/eli/reg/2024/1689/oj</a></li>
+      <li>Verordening (EU) 2026/1744. (2026). <i>Digital Omnibus inzake AI</i>. Publicatieblad van de Europese Unie.</li>
+      <li>Verordening (EU) nr. 596/2014. (2014). <i>Verordening marktmisbruik</i>. Publicatieblad van de Europese Unie, L 173. <a href="https://eur-lex.europa.eu/eli/reg/2014/596/oj">https://eur-lex.europa.eu/eli/reg/2014/596/oj</a></li>
+      <li>Werken met AI. (z.d.). <i>Welke AI-tools houden je bedrijfsdata in de EU?</i> <a href="https://werkenmetai.nl/blog/welke-ai-tools-houden-je-bedrijfsdata-in-de-eu">https://werkenmetai.nl/blog/welke-ai-tools-houden-je-bedrijfsdata-in-de-eu</a></li>
+      <li>Wet bescherming bedrijfsgeheimen. (2018). Geraadpleegd via <a href="https://wetten.overheid.nl">https://wetten.overheid.nl</a></li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<footer class="voet">
+  <div class="wrap">
+    <span>Tijn van der Pol, minor Futureproof met AI. Peildatum 17 november 2026.</span>
+    <span>Gemaakt met hulp van Claude (Anthropic) voor het bronnenonderzoek en de vormgeving.</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var V = '<svg class="vink" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 7.5l3 3 7-8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  var BANDEN = {
+    groen:{titel:"Groen", prive:"Mag in elk account", zak:"Mag in elk account"},
+    oranje:{titel:"Oranje", prive:"Alleen geanonimiseerd", zak:"Mag via het goedgekeurde zakelijke account"},
+    rood:{titel:"Rood", prive:"Nooit", zak:"Nooit, ook niet zakelijk"}
+  };
+
+  // k = kleur; v = oordeel per account: [lamp, titel, sub]
+  var DATA = [
+    {k:"groen", n:"Gepubliceerde jaarrekening", w:"Openbaar. Er is niets vertrouwelijks aan.", l:"Geen persoonsgegevens, tenzij je namen van bestuurders gaat analyseren (art. 4 lid 1 AVG).", p:"Mag. Dat de aanbieder ermee kan trainen is hier geen probleem.", z:"Mag."},
+    {k:"groen", n:"Koersen, marktdata en CBS-cijfers", w:"Openbare informatie.", l:"Valt buiten de AVG (overweging 26 AVG).", p:"Mag.", z:"Mag."},
+    {k:"groen", n:"Vakvragen over IFRS, RJ of btw", w:"Je deelt geen gegevens, alleen een vraag.", l:"Art. 4 AI Act (AI-geletterdheid): de uitkomst blijft jouw verantwoordelijkheid.", p:"Mag. Check het antwoord tegen de standaard zelf.", z:"Mag. Check het antwoord tegen de standaard zelf."},
+    {k:"groen", n:"Excel-, VBA- of Power BI-vragen zonder echte data", w:"Alleen de structuur gaat mee, niet de inhoud.", l:"Past bij minimale gegevensverwerking (art. 5 lid 1 sub c AVG).", p:"Mag.", z:"Mag."},
+    {k:"groen", n:"Fictieve of synthetische voorbeelddata", w:"Niet terug te leiden naar echte mensen of bedrijven.", l:"Anonieme gegevens vallen buiten de AVG (overweging 26 AVG).", p:"Mag.", z:"Mag."},
+
+    {k:"oranje", n:"Interne budgetten en prognoses", w:"Bedrijfsgeheim en concurrentiegevoelig.", l:"Wet bescherming bedrijfsgeheimen, art. 1: je moet redelijke maatregelen nemen om het geheim te houden.", p:"Alleen afgerond en zonder naam van het bedrijf of de afdeling.", z:"Mag. Er wordt standaard niet getraind en er is een verwerkersovereenkomst."},
+    {k:"oranje", n:"Kostprijzen, marges en tarieven", w:"Bedrijfsgeheim. Klantcontracten kunnen geheimhouding eisen.", l:"Wet bescherming bedrijfsgeheimen; geheimhoudingsafspraken (NDA).", p:"Alleen geanonimiseerd en geschaald, bijvoorbeeld index 100.", z:"Mag, als de NDA het toestaat."},
+    {k:"oranje", n:"Omzet per afdeling of regio", w:"Vertrouwelijk. Bij kleine afdelingen zijn cijfers soms terug te leiden naar personen.", l:"Wet bescherming bedrijfsgeheimen; art. 4 lid 1 AVG als de cijfers herleidbaar zijn.", p:"Alleen als indexcijfers of percentages.", z:"Mag."},
+    {k:"oranje", n:"Debiteurenanalyse met alleen B.V.'s en N.V.'s", w:"Rechtspersonen zijn geen persoonsgegevens, maar de lijst is wel vertrouwelijk.", l:"Wet bescherming bedrijfsgeheimen en NDA. Let op: een eenmanszaak of vof is wél een persoonsgegeven.", p:"Alleen met codes, zoals Debiteur A.", z:"Mag."},
+    {k:"oranje", n:"Contractteksten zonder namen of bedragen", w:"Clausules kunnen vertrouwelijk zijn.", l:"Contractuele geheimhouding.", p:"Alleen generieke clausules.", z:"Mag."},
+    {k:"oranje", n:"Ongepubliceerde cijfers van een niet-beursgenoteerd bedrijf", w:"Bedrijfsgeheim, maar geen voorwetenschap.", l:"Wet bescherming bedrijfsgeheimen.", p:"Niet in een privéaccount.", z:"Mag.", alleenZak:true},
+
+    {k:"rood", n:"Salarisadministratie en loonstroken met namen", w:"Herleidbaar en gevoelig. Er is geen grondslag om dit naar een chatbot te sturen.", l:"Art. 5, 6 en 32 AVG. Vaak staan er ook BSN en verzuim in.", p:"Nooit. Het kan in de training terechtkomen en lang bewaard blijven.", z:"Alleen als je werkgever hiervoor een DPIA deed en dit doel goedkeurde. Anders niet.", dpia:true},
+    {k:"rood", n:"BSN", w:"Mag alleen gebruikt worden voor een wettelijk doel, zoals de loonaangifte.", l:"Art. 87 AVG in combinatie met art. 46 UAVG.", p:"Nooit. Een chatbot is geen wettelijk doel.", z:"Nooit."},
+    {k:"rood", n:"IBAN, inloggegevens, wachtwoorden en API-sleutels", w:"Risico op fraude en misbruik.", l:"Art. 32 AVG (beveiliging); art. 33 AVG (datalek melden binnen 72 uur).", p:"Nooit.", z:"Nooit."},
+    {k:"rood", n:"Debiteurenlijst met consumenten of zzp'ers", w:"Persoonsgegevens met betalingsgedrag.", l:"Art. 5 en 6 AVG. Kredietscoring van particulieren is hoog-risico AI (bijlage III, punt 5b AI Act).", p:"Nooit.", z:"Alleen gepseudonimiseerd en met een DPIA.", dpia:true},
+    {k:"rood", n:"Ziekteverzuim, gezondheid of vakbondslidmaatschap", w:"Bijzondere persoonsgegevens. Dit is het type datalek dat de AP bij een huisartsenpraktijk zag.", l:"Art. 9 AVG: verboden, tenzij een uitzondering geldt.", p:"Nooit.", z:"Nooit."},
+    {k:"rood", n:"Ongepubliceerde cijfers van een beursgenoteerd bedrijf", w:"Voorwetenschap. Je deelt die met een partij buiten de insiderlijst.", l:"Marktmisbruikverordening (MAR) art. 7, 10 en 14.", p:"Nooit.", z:"Nooit."},
+    {k:"rood", n:"Fusie- en overnamedossiers vóór aankondiging", w:"Voorwetenschap of onder NDA, en zeer concurrentiegevoelig.", l:"MAR art. 7 en 14 bij een beursnotering; Wet bescherming bedrijfsgeheimen; NDA.", p:"Nooit.", z:"Nooit, tenzij er een apart goedgekeurde dealroom-AI met contract is."}
+  ];
+
+  var zakelijk = false;
+  var gekozen = 11; // salarisadministratie
+  var bord = document.getElementById('bord');
+
+  function bouwBord(){
+    ["groen","oranje","rood"].forEach(function(k){
+      var band = document.createElement('div');
+      band.className = 'band'; band.dataset.k = k;
+      var kop = document.createElement('div'); kop.className = 'band-kop';
+      kop.innerHTML = '<h3>'+BANDEN[k].titel+'</h3><span class="band-regel" data-regel="'+k+'"></span>';
+      band.appendChild(kop);
+      var chips = document.createElement('div'); chips.className = 'chips';
+      DATA.forEach(function(d,i){
+        if(d.k!==k) return;
+        var b = document.createElement('button');
+        b.type='button'; b.className='chip'; b.dataset.i=i;
+        if(d.alleenZak) b.dataset.alleenzak = 'ja';
+        b.setAttribute('aria-pressed','false');
+        b.innerHTML = V + '<span>'+d.n+'</span>';
+        b.addEventListener('click', function(){ kies(i, true); });
+        chips.appendChild(b);
+      });
+      band.appendChild(chips);
+      bord.appendChild(band);
+    });
+  }
+
+  function oordeel(d){
+    if(d.k==='groen') return ['groen','Mag', 'In elk account. Zet er geen echte namen of bedragen bij.'];
+    if(d.k==='oranje'){
+      if(zakelijk) return ['groen','Mag, zakelijk', 'Via het account dat IT heeft goedgekeurd, met verwerkersovereenkomst.'];
+      if(d.alleenZak) return ['oranje','Alleen zakelijk', 'Niet in een privéaccount, ook niet geanonimiseerd.'];
+      return ['oranje','Alleen geanonimiseerd', 'In een privéaccount pas na echte anonimisering. Beter: het zakelijke account.'];
+    }
+    if(zakelijk && d.dpia) return ['rood','Nee', 'Alleen als je werkgever hier vooraf een DPIA voor deed en dit doel goedkeurde.'];
+    return ['rood','Nooit', zakelijk ? 'Ook niet in het zakelijke account.' : 'In geen enkel account.'];
+  }
+
+  function zetLamp(kleur){
+    document.querySelectorAll('.lamp').forEach(function(l){ l.classList.toggle('aan', l.dataset.l===kleur); });
+  }
+
+  function toon(){
+    var d = DATA[gekozen], o = oordeel(d);
+    zetLamp(o[0]);
+    document.getElementById('o-item').textContent = d.n;
+    document.getElementById('o-titel').textContent = o[1];
+    document.getElementById('o-sub').textContent = o[2];
+    document.getElementById('d-waarom').textContent = d.w;
+    document.getElementById('d-wet').textContent = d.l;
+    document.querySelector('#d-prive span').textContent = d.p;
+    document.querySelector('#d-zak span').textContent = d.z;
+    document.getElementById('d-prive').classList.toggle('actief', !zakelijk);
+    document.getElementById('d-zak').classList.toggle('actief', zakelijk);
+    document.querySelectorAll('.chip').forEach(function(c){ c.setAttribute('aria-pressed', String(+c.dataset.i===gekozen)); });
+    document.querySelectorAll('[data-regel]').forEach(function(s){ var k=s.dataset.regel; s.textContent = zakelijk ? BANDEN[k].zak : BANDEN[k].prive; });
+  }
+
+  function kies(i, viaKlik){
+    gekozen = i; toon();
+    if(viaKlik && window.matchMedia('(max-width: 980px)').matches){
+      var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.getElementById('signaal').scrollIntoView({behavior: rm ? 'auto' : 'smooth', block:'start'});
+    }
+  }
+
+  document.querySelectorAll('.seg button').forEach(function(b){
+    b.addEventListener('click', function(){
+      zakelijk = b.dataset.acc==='zakelijk';
+      document.body.classList.toggle('zakelijk', zakelijk);
+      document.querySelectorAll('.seg button').forEach(function(x){ x.setAttribute('aria-checked', String(x===b)); });
+      toon();
+    });
+    b.addEventListener('keydown', function(e){
+      if(e.key==='ArrowRight'||e.key==='ArrowLeft'){
+        var other = b.id==='acc-prive' ? document.getElementById('acc-zak') : document.getElementById('acc-prive');
+        other.focus(); other.click(); e.preventDefault();
+      }
+    });
+  });
+
+  bouwBord();
+  toon();
+
+  // één opstartmoment: de lampen lopen kort door en landen op het gekozen oordeel
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    var reeks = ['groen','oranje','rood'], i = 0;
+    zetLamp(null);
+    var t = setInterval(function(){
+      if(i<reeks.length){ zetLamp(reeks[i]); i++; }
+      else { clearInterval(t); toon(); }
+    }, 220);
+  }
+
+  // quiz
+  var QUIZ = [
+    {v:"Een debiteurenlijst met namen van eenmanszaken, voor een ouderdomsanalyse", a:"rood", u:"Een eenmanszaak is geen rechtspersoon. De naam van de zaak is vaak de naam van de eigenaar, dus dit zijn persoonsgegevens (art. 4 lid 1 AVG). Met alleen B.V.'s was het oranje geweest."},
+    {v:"Het jaarbudget van een team van drie personen, inclusief de post personeelskosten", a:"rood", u:"Personeelskosten gedeeld door drie geeft bijna de salarissen. Dat is herleidbaar, en dus rood. Haal je die post eruit, dan is het oranje."},
+    {v:"De gepubliceerde jaarrekening van een concurrent", a:"groen", u:"Openbaar en niet vertrouwelijk. Die mag in elk account, ook in een gratis versie."}
+  ];
+  var quiz = document.getElementById('quiz');
+  var NAAM = {groen:"Groen", oranje:"Oranje", rood:"Rood"};
+  QUIZ.forEach(function(q, qi){
+    var art = document.createElement('article'); art.className='vraag';
+    var h = document.createElement('h3'); h.textContent = q.v; art.appendChild(h);
+    var kn = document.createElement('div'); kn.className='knoppen'; kn.setAttribute('role','group'); kn.setAttribute('aria-label','Kies een kleur');
+    var ant = document.createElement('div'); ant.className='antwoord'; ant.hidden = true; ant.setAttribute('aria-live','polite'); ant.id='antwoord-'+qi;
+    ["groen","oranje","rood"].forEach(function(k){
+      var b = document.createElement('button'); b.type='button'; b.dataset.k=k;
+      b.innerHTML = '<i aria-hidden="true"></i>'+NAAM[k];
+      b.addEventListener('click', function(){
+        kn.querySelectorAll('button').forEach(function(x){ x.classList.toggle('gekozen', x===b); });
+        var goed = k===q.a;
+        ant.innerHTML = '<strong>'+(goed ? 'Klopt, het is '+NAAM[q.a].toLowerCase()+'.' : 'Het is '+NAAM[q.a].toLowerCase()+'.')+'</strong>'+q.u;
+        ant.hidden = false;
+      });
+      kn.appendChild(b);
+    });
+    art.appendChild(kn); art.appendChild(ant);
+    quiz.appendChild(art);
+  });
+
+  // kopieerknop
+  var kop = document.getElementById('kopieer');
+  kop.addEventListener('click', function(){
+    var tekst = document.getElementById('ai-regel').textContent;
+    try{
+      navigator.clipboard.writeText(tekst).then(function(){ kop.textContent='Gekopieerd'; }, function(){ kop.textContent='Selecteer de regel en kopieer zelf'; });
+    }catch(e){ kop.textContent='Selecteer de regel en kopieer zelf'; }
+  });
+})();
+</script>
+</body>
+</html>
