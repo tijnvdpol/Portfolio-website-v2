@@ -3,6 +3,7 @@ import {
   displayUrl,
   evidenceLabel,
   evidenceType,
+  isAudioUrl,
   isRouteUrl,
   sortEvidence,
 } from '../lib/evidence'
@@ -42,6 +43,29 @@ export default function EvidenceList({ attachments }: { attachments: ProjectAtta
               </span>
             </>
           )
+
+          if (isAudioUrl(attachment.file_url)) {
+            return (
+              <li key={attachment.id} className="min-w-0 border-b border-line py-3">
+                <div className="flex items-center gap-3">
+                  <TickMark size={22} strokeWidth={2.8} />
+                  <span className="flex min-w-0 grow flex-col">
+                    <span className="label-mono text-[11px] text-muted">
+                      {evidenceLabel(evidenceType(attachment.file_type))}
+                    </span>
+                    <span className="text-[15px] font-semibold">{attachment.file_name}</span>
+                  </span>
+                </div>
+                <audio
+                  controls
+                  preload="none"
+                  src={attachment.file_url}
+                  aria-label={attachment.file_name}
+                  className="mt-2 h-10 w-full"
+                />
+              </li>
+            )
+          }
 
           return (
             <li key={attachment.id} className="min-w-0">

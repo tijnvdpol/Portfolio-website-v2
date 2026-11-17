@@ -4,6 +4,7 @@ import type { ProjectAttachment } from '../types/database.types'
 // deze waarden als file_type; geüploade bestanden houden hun MIME-type.
 export const EVIDENCE_TYPES = {
   demo: 'Live demo',
+  audio: 'Opname',
   reader: 'Rapport',
   github: 'Broncode',
   document: 'Documentatie',
@@ -11,7 +12,7 @@ export const EVIDENCE_TYPES = {
 
 export type EvidenceType = keyof typeof EVIDENCE_TYPES | 'bestand'
 
-const ORDER: EvidenceType[] = ['demo', 'reader', 'github', 'document', 'bestand']
+const ORDER: EvidenceType[] = ['demo', 'audio', 'reader', 'github', 'document', 'bestand']
 
 export function evidenceType(fileType: string | null): EvidenceType {
   return fileType && fileType in EVIDENCE_TYPES ? (fileType as EvidenceType) : 'bestand'
@@ -35,6 +36,11 @@ export function isInternalUrl(url: string): boolean {
 // moeten als gewone link openen, niet via de router.
 export function isRouteUrl(url: string): boolean {
   return isInternalUrl(url) && !/.[a-z0-9]{2,5}([?#].*)?$/i.test(url)
+}
+
+// Een geluidsbestand krijgt een speler op de pagina in plaats van een link.
+export function isAudioUrl(url: string): boolean {
+  return /\.(mp3|m4a|wav|ogg|oga)([?#].*)?$/i.test(url)
 }
 
 export function displayUrl(url: string): string {

@@ -1,0 +1,21 @@
+# Facturen Van Dijk Groothandel – stand per 19-11-2026
+
+*Kennisbank van Factuurlijn. Alle bedrijven en facturen zijn fictief.*
+
+Peildatum (vandaag): 19-11-2026.
+Status open = ontvangen, nog niet goedgekeurd; goedgekeurd = betaling ingepland op de geplande betaaldatum; betaald = betaald op de betaaldatum; geblokkeerd = betaling staat stil, zie opmerking. Een negatief bedrag is een creditnota. Creditnota: noem geen betaal- of vervaldatum.
+
+| Factuurnummer | Leverancier | Factuurdatum | Bedrag incl. btw | Vervaldatum | Status | (Geplande) betaaldatum | Opmerking |
+|---|---|---|---|---|---|---|---|
+| 2024-099 | Bakkerij Jansen B.V. | 15-09-2026 | € 1.189,20 | 15-10-2026 | betaald | 14-10-2026 | – |
+| 2024-118 | Bakkerij Jansen B.V. | 03-10-2026 | € 1.452,00 | 02-11-2026 | goedgekeurd | 21-11-2026 | – |
+| 2024-142 | Kantoorcentrum Verhoef B.V. | 01-10-2026 | € 645,95 | 31-10-2026 | betaald | 30-10-2026 | – |
+| 2024-156 | Installatiebedrijf Smit & Zn. | 07-10-2026 | € 5.620,00 | 06-11-2026 | betaald | 05-11-2026 | – |
+| 2024-167 | Transport Hendriks B.V. | 10-10-2026 | € 2.874,10 | 09-11-2026 | geblokkeerd | – | geblokkeerd: inkoopordernummer ontbreekt |
+| 2024-181 | Drukkerij De Boer V.O.F. | 14-10-2026 | € 786,50 | 13-11-2026 | open | – | – |
+| 2024-190 | Beveiliging Wakker B.V. | 16-10-2026 | € 1.960,00 | 15-11-2026 | geblokkeerd | – | geblokkeerd: bedrag wijkt af van de inkooporder (€ 1.750,00) |
+| 2024-203 | Transport Hendriks B.V. | 20-10-2026 | € 3.218,75 | 19-12-2026 | open | – | – |
+| 2024-207 | Schoonmaakbedrijf Glans B.V. | 22-10-2026 | € 924,00 | 21-11-2026 | goedgekeurd | 20-11-2026 | – |
+| 2024-215 | Koffie & Co Leveringen B.V. | 28-10-2026 | € 312,40 | 27-11-2026 | open | – | – |
+| 2024-221 | IT-Service Bakker B.V. | 02-11-2026 | € 2.420,00 | 02-12-2026 | goedgekeurd | 01-12-2026 | – |
+| 2024-230 | Drukkerij De Boer V.O.F. | 05-11-2026 | € -150,00 | 05-12-2026 | open | – | creditnota: wordt verrekend met een volgende betaling |
