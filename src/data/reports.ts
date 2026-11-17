@@ -120,6 +120,42 @@ export const reports: Report[] = [
         (module) => module.default,
       ),
   },
+  {
+    slug: 'stoplicht-ai-chatbots',
+    projectSlug: 'onderzoek-ai-chatbot-stoplicht',
+    title: 'Welke gegevens mag je als controller in een AI-chatbot zetten?',
+    subtitle:
+      'Memo met een stoplicht voor 18 soorten financiële gegevens, onderbouwd met de AVG, de AI Act en de MAR en met de voorwaarden van ChatGPT, Claude en Copilot, privé en zakelijk.',
+    author: 'Tijn van der Pol',
+    program: 'Minor Future-Proof met AI! — Hogeschool Utrecht',
+    date: 'November 2026',
+    version: '1.0 (peildatum 17 november 2026)',
+    readingGuide: [
+      {
+        code: 'Groen',
+        label: 'Mag',
+        meaning: 'Openbaar, fictief of algemene vakkennis: in elk account.',
+      },
+      {
+        code: 'Oranje',
+        label: 'Alleen zakelijk of geanonimiseerd',
+        meaning:
+          'Vertrouwelijke bedrijfsgegevens zonder persoonsgegevens: via het goedgekeurde zakelijke account, of na echte anonimisering.',
+      },
+      {
+        code: 'Rood',
+        label: 'Nooit',
+        meaning:
+          'Herleidbare persoonsgegevens, voorwetenschap en M&A vóór aankondiging: in geen algemene chatbot, ook niet zakelijk zonder DPIA.',
+      },
+    ],
+    caveat:
+      'Dit is een studentenonderzoek en geen juridisch advies. De voorwaarden van AI-aanbieders veranderen vaak; alles geldt per 17 november 2026. Een paar details over aanbieders komen uit secundaire bronnen. Het beleid van je werkgever gaat voor als het strenger is.',
+    load: () =>
+      import('../content/rapporten/stoplicht-ai-chatbots.md?raw').then(
+        (module) => module.default,
+      ),
+  },
 ]
 
 export function findReport(slug: string | undefined): Report | undefined {
