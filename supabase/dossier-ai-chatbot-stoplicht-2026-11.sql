@@ -62,9 +62,12 @@ insert into public.project_attachments (project_id, file_name, file_url, file_ty
 select p.id, v.file_name, v.file_url, v.file_type
 from (
   values
-    ('onderzoek-ai-chatbot-stoplicht', 'Interactief stoplicht: mag dit in de chatbot?', '/presentaties/stoplicht-ai-chatbots.html', 'document')
+    ('onderzoek-ai-chatbot-stoplicht', 'Interactief stoplicht: mag dit in de chatbot?', '/presentaties/stoplicht-ai-chatbots.html', 'document'),
+    ('onderzoek-ai-chatbot-stoplicht', 'Memo lezen: stoplicht met onderbouwing en bronnen', '/rapporten/stoplicht-ai-chatbots', 'reader')
 ) as v (slug, file_name, file_url, file_type)
 join public.projects p on p.slug = v.slug
-where not exists (select 1 from public.project_attachments a where a.project_id = p.id);
+where not exists (
+  select 1 from public.project_attachments a where a.project_id = p.id and a.file_url = v.file_url
+);
 
 commit;
